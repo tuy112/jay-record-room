@@ -1,0 +1,48 @@
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 32px;
+    background: #111827;
+    color: #f9fafb;
+    cursor: default;
+}
+
+.header h1 {
+    font-size: 17px;
+    font-weight: 700;
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+    margin: 0;
+}
+
+.subLogo {
+    font-size: 10px;
+    font-weight: 400;
+    color: #9ca3af;
+}
+
+.header nav ul {
+    display: flex;
+    gap: 12px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.header nav li a {
+    font-size: 12px;
+    color: #d1d5db;
+    text-decoration: none;
+    transition: 0.15s;
+}
+
+.header nav li a:hover {
+    color: #f9fafb;
+}
+
+/* 모바일 */
+@media (max-width: 768px) {
+
+}

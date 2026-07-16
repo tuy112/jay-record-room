@@ -1,0 +1,60 @@
+/* 페이지 레이아웃 */
+.recordPage {
+    width: 100%;
+    min-height: 100vh;
+    background: #f8fafc;
+    padding: 70px 18px 80px;
+}
+
+.recordPageInner {
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+.recordPageHeader {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.recordPageHeader h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.recordPageHeader p {
+    font-size: 14px;
+    color: #64748b;
+}
+
+.recordPageContent {
+    display: flex;
+    flex-direction: column;
+}
+
+/* 공통 - tabBar */
+.tabBar { 
+    display: flex; 
+    border-bottom: 1px solid #e5e7eb; 
+    margin-bottom: 1.25rem; 
+}
+
+.tabBtn {
+    flex: 1;
+    padding: 12px 0;
+    background: none;
+    border: none;
+    font-size: 15px;
+    font-weight: 600;
+    color: #9ca3af;
+    cursor: pointer;
+    transition: color 0.2s;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+}
+
+.tabActive {
+    color: #1e2d4d;
+    border-bottom: 2px solid #1e2d4d;
+}
