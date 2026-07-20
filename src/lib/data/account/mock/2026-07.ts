@@ -1,7 +1,7 @@
 import { MonthData } from '../../types/account';
 
 export const DATA_2026_07: MonthData = {
-  totalAsset: 15777428, // 7월 14일 기준
+  totalAsset: 0, // 7월 31일 기준
   budget: 150000,
   budgetStartDate: '2026-07-13',
   entries: [
