@@ -4,15 +4,20 @@ import { useState, MouseEvent } from 'react';
 import Link from 'next/link';
 
 import PrepareModal from '../modal/Modal';
+import { logout } from '../../app/login/actions';
 import styles from './Header.module.css';
 
 export default function Header() {
+  // 1. 미구현 모달창 열기
   const [open, setOpen] = useState(false);
 
   const handlePrepareClick = (e: MouseEvent) => {
     e.preventDefault();
     setOpen(true);
   };
+
+  // 2. 로그아웃 기능
+
 
   return (
     <header className={styles.header}>
@@ -32,6 +37,11 @@ export default function Header() {
             <Link href="/contact" onClick={handlePrepareClick}>
               Contact Us
             </Link>
+          </li>
+          <li>
+            <form action={logout}>
+              <button className="logoutBtn" type="submit">로그아웃</button>
+            </form>
           </li>
         </ul>
       </nav>
