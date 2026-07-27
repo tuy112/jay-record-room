@@ -2,67 +2,71 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 18px 32px;
-    background: #111827;
-    color: #f9fafb;
-    cursor: default;
+    padding: 12px 16px;
+    background: #333;
 }
 
-.header h1 {
-    font-size: 17px;
+.logoArea {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.logo {
+    color: #fff;
+    font-size: 19px;
     font-weight: 700;
-    display: flex;
-    align-items: baseline;
-    gap: 5px;
-    margin: 0;
+    text-decoration: none;
+    line-height: 1;
 }
 
-.subLogo {
+.projectName {
+    margin-top: 2px;
+    color: #bdbdbd;
     font-size: 10px;
-    font-weight: 400;
-    color: #9ca3af;
+    line-height: 1;
 }
 
-.header nav ul {
+.navigation {
+    margin-left: auto;
+}
+
+.menu {
     display: flex;
-    gap: 12px;
+    align-items: center;
+    gap: 16px;
     list-style: none;
     margin: 0;
     padding: 0;
 }
 
-.header nav li a {
-    font-size: 12px;
-    color: #d1d5db;
+.menu a {
+    color: #fff;
     text-decoration: none;
-    transition: 0.15s;
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
 }
 
-.header nav li a:hover {
-    color: #f9fafb;
+.menu a:hover {
+    color: #7ab8ff;
 }
 
-.header nav li form {
-    display: contents;
-}
-
-.header nav li button {
-    background: none;
+.logoutButton {
+    height: 30px;
+    padding: 0 14px;
     border: none;
-    padding: 0;
-    margin: 0;
-    font-size: 14px;     
-    font-size: 12px;
-    color: #d1d5db;
-    transition: 0.15s;
+    border-radius: 8px;
+    background: #ef4444;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
     cursor: pointer;
+    transition: .2s;
 }
 
-.header nav li button:hover {
-    color: #f9fafb;
-}
-
-/* 모바일 */
-@media (max-width: 768px) {
-
+.logoutButton:hover {
+    background: #dc2626;
 }
