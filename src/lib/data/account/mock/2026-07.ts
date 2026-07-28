@@ -2,8 +2,8 @@ import { MonthData } from '../../types/account';
 
 export const DATA_2026_07: MonthData = {
   totalAsset: 0, // 7월 31일 기준
-  budget: 150000,
-  budgetStartDate: '2026-07-13',
+  budget: 80000,
+  budgetStartDate: '2026-07-24',
   entries: [
     // 수입
     { id: '1', type: 'income', label: '월급', amount: 2447834 },
@@ -99,11 +99,79 @@ export const DATA_2026_07: MonthData = {
     { date: '2026-07-12', label: '게임구매(맷차카멜)', amount: 6369, cardType: 'cash' },
     { date: '2026-07-12', label: '쿠팡장보기(휴지)', amount: 3930, cardType: 'credit' },
     { date: '2026-07-12', label: '저녁(쿠팡이츠)', amount: 8700, cardType: 'credit' },
-
-    // 이때부터 7/31일까지 현금 15만원으로만 생활하기 시작!! (현재 신용카드내역 : 550,552원(더이상 신용카드 사용x) )
     { date: '2026-07-13', label: '커피', amount: 1800, cardType: 'credit' },
     { date: '2026-07-13', label: '저녁(편의점)', amount: 4600, cardType: 'cash' },
 
     { date: '2026-07-14', label: '커피', amount: 1800, cardType: 'cash' },
+    { date: '2026-07-14', label: '생새우벙(gps)', amount: 53875, cardType: 'cash' },
+    
+    { date: '2026-07-15', label: '출근길 카카오바이크', amount: 660, cardType: 'cash' },
+    { date: '2026-07-15', label: '점심(토마토도시락)', amount: 3900, cardType: 'cash' },
+    { date: '2026-07-15', label: '쿠팡쇼핑', amount: 9480, cardType: 'cash' },
+    { date: '2026-07-15', label: '주유비(오토바이)', amount: 3626, cardType: 'cash' },
+    { date: '2026-07-15', label: '저녁(편의점)', amount: 4200, cardType: 'cash' },
+    { date: '2026-07-15', label: '저녁(음료2잔)', amount: 1800, cardType: 'cash' },
+    { date: '2026-07-15', label: '커피(루나 캡슐 무인카페)', amount: 2200, cardType: 'cash' },
+    
+    { date: '2026-07-16', label: '점심(토마토도시락)', amount: 5000, cardType: 'cash' },
+    { date: '2026-07-16', label: '편의점(광안리 맥주)', amount: 1750, cardType: 'cash' },
+    { date: '2026-07-16', label: '편의점(광안리 맥주)', amount: 3450, cardType: 'cash' },
+    { date: '2026-07-16', label: '다이소(탈취제)', amount: 6000, cardType: 'credit' },
+    { date: '2026-07-16', label: '마트(맥주2캔-혜린)', amount: 8560, cardType: 'credit' },
+    { date: '2026-07-16', label: '코인노래방(혜린)', amount: 5000, cardType: 'credit' },
+    
+    { date: '2026-07-17', label: '코인노래방(혜린)', amount: 5000, cardType: 'cash' },
+    { date: '2026-07-17', label: '카카오바이크', amount: 660, cardType: 'cash' },
+    { date: '2026-07-17', label: '쿠팡장보기', amount: 1700, cardType: 'cash' },
+    { date: '2026-07-17', label: '쿠팡장보기', amount: 3000, cardType: 'cash' },
+    { date: '2026-07-17', label: '쿠팡장보기', amount: 3260, cardType: 'cash' },
+    { date: '2026-07-17', label: '쿠팡장보기', amount: 8190, cardType: 'cash' },
+    
+    { date: '2026-07-18', label: '미남역 고기(gps)', amount: 53671, cardType: 'cash' },
+    { date: '2026-07-18', label: '주유비(부산->대구)', amount: 20000, cardType: 'cash' },
+    { date: '2026-07-18', label: '대구 초밥집', amount: 11500, cardType: 'cash' },
+    { date: '2026-07-18', label: '편의점(대구)', amount: 3700, cardType: 'cash' },
+    { date: '2026-07-18', label: '대구 국밥집', amount: 13000, cardType: 'cash' },
+    
+    { date: '2026-07-19', label: '사직 티켓값', amount: 9500, cardType: 'cash' },
+    { date: '2026-07-19', label: '점심(진영 짜장면)', amount: 13000, cardType: 'cash' },
+    { date: '2026-07-19', label: '저녁(마트 장보기)', amount: 4000, cardType: 'cash' },
+    
+    { date: '2026-07-20', label: '삼라온 합동 뒷풀이 정산', amount: 54193, cardType: 'cash' },
+    { date: '2026-07-20', label: '클로드 ai', amount: 33096, cardType: 'credit' },
+    { date: '2026-07-20', label: '정보처리기사 필기 접수', amount: 9700, cardType: 'cash' },
+    { date: '2026-07-20', label: '오토바이 정비(엔진오일,브레이크등 센서)', amount: 26000, cardType: 'cash' },
+    { date: '2026-07-20', label: '저녁(마트 장보기1)', amount: 4710, cardType: 'cash' },
+    { date: '2026-07-20', label: '저녁(마트 장보기2)', amount: 1980, cardType: 'cash' },
+    
+    { date: '2026-07-21', label: '점심(편의점)', amount: 3450, cardType: 'cash' },
+    { date: '2026-07-21', label: '저녁(마트 장보기)', amount: 4900, cardType: 'cash' },
+    { date: '2026-07-21', label: '?지출', amount: 3000, cardType: 'cash' },
+    { date: '2026-07-21', label: '편의점(음료)', amount: 3300, cardType: 'cash' },
+    { date: '2026-07-21', label: '편의점(?)', amount: 2400, cardType: 'cash' },
+    
+    { date: '2026-07-22', label: '편의점(맥주)', amount: 3500, cardType: 'cash' },
+    { date: '2026-07-22', label: '승통', amount: 27500, cardType: 'cash' },
+    
+    { date: '2026-07-23', label: '토끼 티모시', amount: 19200, cardType: 'cash' },
+    { date: '2026-07-23', label: '베리어스 정모비', amount: 10000, cardType: 'cash' },
+    { date: '2026-07-23', label: '점심(토마토 도시락)', amount: 3900, cardType: 'cash' },
+    { date: '2026-07-23', label: '저녁(마트 장보기)', amount: 1500, cardType: 'cash' },
+    { date: '2026-07-24', label: '저녁(사직 닭갈비-진성주)', amount: 33100, cardType: 'cash', excludeFromBudget: true },
+
+    // 이때부터 7/31일까지 현금 8만원으로만 생활하기 시작!!
+    { date: '2026-07-24', label: '사직직관', amount: 3200, cardType: 'cash' },
+    { date: '2026-07-24', label: '편의점(맥주2캔)', amount: 3500, cardType: 'cash' },
+    { date: '2026-07-24', label: '야식(마트 장보기)+25일 휴게소(핫식스 2캔)', amount:5000, cardType: 'cash' },
+    
+    { date: '2026-07-25', label: '주유비(부산->단양)', amount: 20000, cardType: 'cash', excludeFromBudget: true },
+    { date: '2026-07-26', label: '캠핑장 커피 4잔', amount: 16000, cardType: 'cash', excludeFromBudget: true },
+    { date: '2026-07-26', label: '주유비(단양->부산)', amount: 45000, cardType: 'cash', excludeFromBudget: true },
+    { date: '2026-07-26', label: '다이소(탈취제)', amount: 4000, cardType: 'cash', excludeFromBudget: true },
+    
+    { date: '2026-07-27', label: '지출 제로!!', amount: 0, cardType: 'cash' },
+    
+    { date: '2026-07-28', label: '쿠팡쇼핑(캠핑용품-의자,테이블,가스랜턴,차방석)', amount: 68180, cardType: 'cash', excludeFromBudget: true },
+    { date: '2026-07-28', label: '8/22 잠실직관', amount: 19000, cardType: 'cash', excludeFromBudget: true },
   ],
 };

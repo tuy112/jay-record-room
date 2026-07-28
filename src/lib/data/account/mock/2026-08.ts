@@ -2,7 +2,7 @@ import { MonthData } from '../../types/account';
 
 export const DATA_2026_08: MonthData = {
   totalAsset: 0, // 8월 1일 기준
-  budget: 500000,
+  budget: 310000,
   budgetStartDate: '2026-08-01',
   entries: [
     // 수입
@@ -31,7 +31,8 @@ export const DATA_2026_08: MonthData = {
     { id: '19', type: 'saving', label: '청년주택청약', amount: 50000 },
   ],
   dailyExpenses: [
-    { date: '2026-08-01', label: '헬스 10개월(3/3)', amount: 203040, cardType: 'credit' },
-    { date: '2026-08-01', label: '자동차 보험료 ( / )', amount: 0, cardType: 'credit' },
+    // 신용카드는 50만까지만! 체크카드는 하루에 만원(총31만까지 목표)
+    { date: '2026-08-01', label: '헬스 10개월(3/3)', amount: 203040, cardType: 'credit', excludeFromBudget: true },
+    { date: '2026-08-01', label: '자동차 보험료 ( / )', amount: 0, cardType: 'credit', excludeFromBudget: true },
   ],
 };
