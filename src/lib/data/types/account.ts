@@ -15,6 +15,7 @@ export interface DailyExpense {
     label: string;
     amount: number;
     cardType: CardType;
+    excludeFromBudget?: boolean;
 }
 
 export interface MonthData {

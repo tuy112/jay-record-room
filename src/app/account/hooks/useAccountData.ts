@@ -50,8 +50,12 @@ export function useAccountData() {
     const goal = current.budget;
     const startDate = current.budgetStartDate ?? null;
     const spent = startDate
-      ? current.dailyExpenses.filter(e => e.date >= startDate).reduce((s, e) => s + e.amount, 0)
-      : summary.totalExpense;
+      ? current.dailyExpenses
+          .filter(e => e.date >= startDate && !e.excludeFromBudget)
+          .reduce((s, e) => s + e.amount, 0)
+      : current.dailyExpenses
+          .filter(e => !e.excludeFromBudget)
+          .reduce((s, e) => s + e.amount, 0);
 
     const remaining = goal - spent;
     const progressPct = goal > 0 ? Math.min((spent / goal) * 100, 100) : 0;
@@ -62,6 +66,7 @@ export function useAccountData() {
     const daysLeft = isCurrentMonth ? Math.max(lastDay - today.getDate(), 0) : null;
 
     return { goal, spent, remaining, progressPct, daysLeft };
+    
   }, [current, summary, year, month]);
 
   // 일별 지출 그룹화 + 날짜순 정렬
@@ -71,7 +76,8 @@ export function useAccountData() {
   );
   const sortedDates = useMemo(() => Object.keys(groupedDaily).sort(), [groupedDaily]);
 
-  // 날짜별 접기/펼치기 — 월이 바뀌면 전부 다시 접힘 (버그 수정: 기존엔 최초 마운트에만 적용됨)
+  // 날짜별 접기/펼치기 — 월이 바뀌면 전부 다시 접힘 
+  // 버그 수정: 기존엔 최초 마운트에만 적용됨
   const [collapsedDates, setCollapsedDates] = useState<Set<string>>(new Set());
   useEffect(() => {
     setCollapsedDates(new Set(sortedDates));
