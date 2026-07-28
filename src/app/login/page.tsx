@@ -8,7 +8,7 @@ export default function LoginPage() {
         <div className={styles.loginHeader}>
           <h1 className={styles.loginTitle}>가계부 & 운동기록</h1>
           <p className={styles.loginDescription}>
-            저만 로그인할 수 있습니다.<br/> 왜 제 가계부가 궁금하신가요?
+            저만 로그인할 수 있습니다.<br/> 제 가계부가 궁금하신가요?.?
           </p>
         </div>
 
