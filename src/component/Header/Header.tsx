@@ -8,7 +8,7 @@ export default function Header() {
   return (
     <header className={styles.header}>
       <div className={styles.logoArea}>
-        <Link href="/" className={styles.logo}>
+        <Link href="https://jstory-next.vercel.app/" className={styles.logo}>
           JSTORY
         </Link>
 
