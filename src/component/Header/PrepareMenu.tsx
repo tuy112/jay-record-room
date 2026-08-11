@@ -16,14 +16,14 @@ export default function PrepareMenu() {
   return (
     <>
       <li>
-        <Link href="/about" onClick={handleClick}>
-          About
+        <Link href="/diary">
+          나의감정일기
         </Link>
       </li>
 
       <li>
         <Link href="/contact" onClick={handleClick}>
-          Contact Us
+          미정메뉴
         </Link>
       </li>
 

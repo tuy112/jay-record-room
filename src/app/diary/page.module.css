@@ -1,0 +1,198 @@
+/* 페이지 레이아웃 */
+.diaryPage {
+      width: 100%;
+      min-height: 100vh;
+      background: #f8fafc;
+      padding: 70px 18px 80px;
+}
+
+.diaryPageInner {
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+}
+
+.diaryPageHeader {
+      margin-bottom: 20px;
+      text-align: center;
+}
+
+.diaryPageHeader h1 {
+      font-size: 28px;
+      font-weight: 700;
+      color: #0f172a;
+}
+
+.diaryPageHeader p {
+      font-size: 14px;
+      color: #64748b;
+}
+
+.diaryPageContent {
+      display: flex;
+      flex-direction: column;
+}
+
+/* 일기 파트 */
+.writeBox {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.writeBoxTitle {
+      font-size: 18px;
+      font-weight: 700;
+      color: #0f172a;
+}
+
+.emotionSelect {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+}
+
+.emotionBtn {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 6px 12px;
+      border: 1.5px solid transparent;
+      border-radius: 20px;
+      background: #f1f5f9;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+}
+
+.titleInput {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      font-size: 14px;
+}
+
+.contentInput {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      font-size: 14px;
+      resize: vertical;
+}
+
+.musicInputRow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+}
+
+.musicInput {
+      flex: 1 1 140px;
+      min-width: 0;
+      padding: 10px 12px;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      font-size: 13px;
+}
+.saveBtn {
+      align-self: flex-end;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      background: #0f172a;
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+}
+
+.entryList {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+}
+
+.entryCard {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.entryCardHeader {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+}
+
+.entryEmotionBadge {
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #0f172a;
+}
+
+.entryDate {
+      font-size: 12px;
+      color: #94a3b8;
+}
+
+.entryTitle {
+      font-size: 16px;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 6px;
+}
+
+.entryContent {
+      font-size: 14px;
+      color: #475569;
+      line-height: 1.6;
+      margin-bottom: 14px;
+}
+
+.musicCard {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      background: #f8fafc;
+      border-radius: 8px;
+}
+
+.musicIcon {
+      font-size: 18px;
+}
+
+.musicInfo {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+}
+
+.musicName {
+      font-size: 13px;
+      font-weight: 600;
+      color: #0f172a;
+}
+
+.musicArtist {
+      font-size: 12px;
+      color: #64748b;
+}
+
+.musicLink {
+      font-size: 12px;
+      font-weight: 600;
+      color: #2563eb;
+      text-decoration: none;
+}
