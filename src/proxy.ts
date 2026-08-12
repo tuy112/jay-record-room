@@ -3,8 +3,9 @@ import { NextRequest, NextResponse } from "next/server";
 export function proxy(request: NextRequest) {
   const isLoggedIn = request.cookies.get("jstory_auth")?.value === "ok";
   const isLoginPage = request.nextUrl.pathname.startsWith("/login");
+  const isDevRecordPage = request.nextUrl.pathname.startsWith("/dev-record");
 
-  if (!isLoggedIn && !isLoginPage) {
+  if (!isLoggedIn && !isLoginPage && !isDevRecordPage) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
