@@ -35,17 +35,19 @@
 .menu {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 13px;
     list-style: none;
     margin: 0;
     padding: 0;
 }
 
 .menu a {
+    display: flex;
+    align-items: center;
+    gap: 3px;
     color: #fff;
-    text-decoration: none;
-    font-size: 13px;
-    font-weight: 500;
+    font-size: 12px;
+    font-weight: 400;
     white-space: nowrap;
 }
 

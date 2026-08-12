@@ -2,6 +2,7 @@ import Link from 'next/link';
 
 import PrepareMenu from './PrepareMenu';
 import LogoutButton from './LogoutButton';
+
 import styles from './Header.module.css';
 
 export default function Header() {

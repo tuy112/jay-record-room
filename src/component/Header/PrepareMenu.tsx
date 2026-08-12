@@ -1,36 +1,25 @@
 'use client';
-
-import { MouseEvent, useState } from 'react';
 import Link from 'next/link';
-
-import PrepareModal from '../modal/Modal';
+import { Home, LifeBuoy } from 'lucide-react';
 
 export default function PrepareMenu() {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const handleClick = (e: MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    setIsOpen(true);
-  };
 
   return (
     <>
+        <Link href="/">
+          <Home size={15} />
+          홈
+        </Link>
       <li>
         <Link href="/diary">
-          나의감정일기
+          일기장
         </Link>
       </li>
-
       <li>
-        <Link href="/contact" onClick={handleClick}>
-          미정메뉴
+        <Link href="/dev-record">
+          개발일지
         </Link>
       </li>
-
-      <PrepareModal
-        open={isOpen}
-        onClose={() => setIsOpen(false)}
-      />
     </>
   );
 }
