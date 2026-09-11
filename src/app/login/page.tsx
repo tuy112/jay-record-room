@@ -3,6 +3,7 @@ import styles from "./style.module.css";
 
 export default function LoginPage() {
   return (
+    
     <main className={styles.loginPage}>
       <section className={styles.loginCard}>
         <div className={styles.loginHeader}>
