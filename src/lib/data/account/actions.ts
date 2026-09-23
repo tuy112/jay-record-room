@@ -7,38 +7,40 @@ import { readMonth, writeMonth } from './store';
 import { Entry, DailyExpense, MonthData } from '@/lib/data/types/account';
 
 export async function getMonthData(month: string): Promise<MonthData | null> {
-  return readMonth(month) ?? null;
+      return readMonth(month) ?? null;
 }
 
 export async function addEntry(month: string, entry: Omit<Entry, 'id'>) {
-  const current = readMonth(month);
-  if (!current) throw new Error(`${month} 데이터 없음`);
+      const current = readMonth(month);
+      if (!current) throw new Error(`${month} 데이터 없음`);
 
-  const newEntry: Entry = { ...entry, id: crypto.randomUUID() };
-  writeMonth(month, {
-    ...current,
-    entries: [...current.entries, newEntry],
-  });
+      const newEntry: Entry = { ...entry, id: crypto.randomUUID() };
+      writeMonth(month, {
+      ...current,
+      entries: [...current.entries, newEntry],
+      });
 
-  revalidatePath('/account');
+      revalidatePath('/account');
 }
 
+// 일일지출 추가
 export async function addDailyExpense(month: string, expense: DailyExpense) {
-  const current = readMonth(month);
-  if (!current) throw new Error(`${month} 데이터 없음`);
+      const current = readMonth(month);
+      if (!current) throw new Error(`${month} 데이터 없음`);
 
-  writeMonth(month, {
-    ...current,
-    dailyExpenses: [...current.dailyExpenses, expense],
-  });
+      writeMonth(month, {
+      ...current,
+      dailyExpenses: [...current.dailyExpenses, expense],
+      });
 
-  revalidatePath('/account');
+      revalidatePath('/account');
 }
 
+// 일일지출 수정
 export async function updateAsset(month: string, totalAsset: number) {
-  const current = readMonth(month);
-  if (!current) throw new Error(`${month} 데이터 없음`);
+      const current = readMonth(month);
+      if (!current) throw new Error(`${month} 데이터 없음`);
 
-  writeMonth(month, { ...current, totalAsset });
-  revalidatePath('/account');
+      writeMonth(month, { ...current, totalAsset });
+      revalidatePath('/account');
 }
