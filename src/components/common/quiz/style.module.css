@@ -1,0 +1,164 @@
+.quizList {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+}
+
+.quizItem {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 14px 16px;
+}
+
+.quizQuestionRow {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin-bottom: 12px;
+}
+
+.quizNumber {
+      flex-shrink: 0;
+      font-size: 12px;
+      font-weight: 700;
+      color: #fff;
+      background: #4f46e5;
+      border-radius: 4px;
+      padding: 2px 6px;
+      line-height: 1.5;
+}
+
+.quizQuestion {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.6;
+      color: #1e293b;
+      font-weight: 500;
+}
+
+.optionList {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+}
+
+.optionButton {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      text-align: left;
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 13px;
+      color: #334155;
+      cursor: pointer;
+      transition: 0.15s;
+}
+
+.optionButton:hover:not(:disabled) {
+      border-color: #a5b4fc;
+      background: #eef2ff;
+}
+
+.optionButton:disabled {
+      cursor: default;
+}
+
+.optionLabel {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #f1f5f9;
+      color: #475569;
+      font-size: 11px;
+      font-weight: 700;
+}
+
+.optionText {
+      flex: 1;
+      line-height: 1.5;
+}
+
+.optionCorrect {
+      border-color: #16a34a;
+      background: #f0fdf4;
+}
+
+.optionCorrect .optionLabel {
+      background: #16a34a;
+      color: #fff;
+}
+
+.optionWrong {
+      border-color: #dc2626;
+      background: #fef2f2;
+}
+
+.optionWrong .optionLabel {
+      background: #dc2626;
+      color: #fff;
+}
+
+.quizAnswerBox {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px dashed #cbd5e1;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+}
+
+.resultCorrect {
+      margin: 0;
+      font-size: 13px;
+      font-weight: 700;
+      color: #16a34a;
+}
+
+.resultWrong {
+      margin: 0;
+      font-size: 13px;
+      font-weight: 700;
+      color: #dc2626;
+}
+
+.quizExplanation {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.6;
+      color: #334155;
+}
+
+.quizExplanationLabel {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      color: #fff;
+      background: #0ea5e9;
+      border-radius: 4px;
+      padding: 1px 6px;
+      margin-right: 6px;
+}
+
+.retryButton {
+      align-self: flex-start;
+      font-size: 12px;
+      color: #64748b;
+      background: #f1f5f9;
+      border: none;
+      border-radius: 6px;
+      padding: 6px 12px;
+      cursor: pointer;
+}
+
+.retryButton:hover {
+      background: #e2e8f0;
+}

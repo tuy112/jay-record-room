@@ -1,8 +1,8 @@
 'use client'
 import { useState, useEffect } from 'react';
 
-import Header from '../../component/Header/Header';
-import Footer from '../../component/Footer/Footer';
+import Header from '../../components/header';
+import Footer from '../../components/footer';
 
 import { diaryEntries, emotionList } from '../../lib/data/diary/diaryData';
 import type { DiaryEntry, EmotionType } from '../../lib/data/types/diaryTypes';

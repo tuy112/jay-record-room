@@ -1,0 +1,252 @@
+.boardWrap {
+    width: 100%;
+    overflow-x: auto;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    background: #ffffff;
+}
+
+.boardTable {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.boardTable thead {
+    background: #f8fafc;
+}
+
+.boardTable th {
+    padding: 16px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #334155;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.boardTable td {
+    padding: 16px;
+    font-size: 14px;
+    color: #475569;
+    border-bottom: 1px solid #f1f5f9;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.boardTable tbody tr {
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+
+.boardTable tbody tr:hover {
+    background: #f8fafc;
+}
+
+.checkboxColumn {
+    width: 60px;
+    text-align: center !important;
+}
+
+.numberColumn {
+    width: 80px;
+    text-align: center !important;
+}
+
+.boardTable input[type='checkbox'] {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.empty {
+    padding: 60px 0;
+    text-align: center;
+    color: #94a3b8;
+}
+
+.toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    gap: 20px;
+}
+
+.toolbarLeft {
+    display: flex;
+    align-items: center;
+}
+
+.toolbarRight {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.toolbar h2 {
+    font-size: 30px;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.deleteButton {
+    height: 42px;
+    padding: 0 18px;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    background: #ffffff;
+    color: #334155;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.deleteButton:hover {
+    background: #f8fafc;
+}
+
+.writeButton {
+    height: 42px;
+    padding: 0 18px;
+    border: none;
+    border-radius: 10px;
+    background: #334155;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+
+.writeButton:hover {
+    background: #1e293b;
+}
+
+.searchWrap {
+    margin-bottom: 20px;
+}
+
+.searchInput {
+    width: 280px;
+    height: 42px;
+    padding: 0 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    outline: none;
+    font-size: 14px;
+    background: #ffffff;
+}
+
+.searchInput:focus {
+    border-color: #64748b;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 28px;
+}
+
+.pageButton {
+    width: 38px;
+    height: 38px;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    background: #ffffff;
+    cursor: pointer;
+}
+
+.activePage {
+    width: 38px;
+    height: 38px;
+    border: none;
+    border-radius: 10px;
+    background: #334155;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+/* 모바일 */
+@media (max-width: 768px) {
+
+    .toolbar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+        margin-bottom: 16px;
+    }
+
+    .toolbarLeft,
+    .toolbarRight {
+        width: 100%;
+    }
+
+    .toolbarRight {
+        display: flex;
+        gap: 8px;
+    }
+
+    .searchWrap {
+        width: 100%;
+        margin-bottom: 0;
+    }
+
+    .searchInput {
+        width: 100%;
+        height: 44px;
+        font-size: 13px;
+    }
+
+    .deleteButton,
+    .writeButton {
+        min-width: 56px;
+        height: 44px;
+        padding: 0 12px;
+        font-size: 12px;
+        border-radius: 12px;
+        white-space: nowrap;
+    }
+
+    .boardWrap {
+        border-radius: 14px;
+        overflow-x: auto;
+    }
+
+    .boardTable {
+        min-width: 560px;
+    }
+
+    .boardTable th,
+    .boardTable td {
+        padding: 14px 10px;
+        font-size: 12px;
+    }
+
+    .checkboxColumn {
+        width: 44px;
+    }
+
+    .numberColumn {
+        width: 56px;
+    }
+
+    .boardTable td {
+        max-width: 120px;
+    }
+
+    .pagination {
+        gap: 6px;
+        margin-top: 20px;
+        flex-wrap: wrap;
+    }
+
+    .pageButton,
+    .activePage {
+        width: 34px;
+        height: 34px;
+        font-size: 13px;
+    }
+}

@@ -1,0 +1,132 @@
+/* 상세페이지 css */
+.detailPage {
+    width: 100%;
+    min-height: 100vh;
+    background: #f8fafc;
+    padding: 90px 24px 80px;
+}
+
+.detailPageInner {
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+.detailPageHeader {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.detailPageHeader h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.detailPageHeader p {
+    font-size: 14px;
+    color: #64748b;
+}
+
+.detailPageContent {
+    display: flex;
+    flex-direction: column;
+}
+
+/* 테이블 css */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th,
+.table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #e5e5e5;
+    text-align: left;
+    font-size: 14px;
+    vertical-align: top;
+}
+
+.topicCol {
+    width: 12%;
+    text-align: center;
+}
+
+.titleCol {
+    width: 68%;
+}
+
+.dateCol {
+    width: 20%;
+    text-align: center;
+}
+
+.row {
+    cursor: pointer;
+}
+
+.row:hover {
+    background: #f7f7f7;
+}
+
+.title {
+    font-size: 14px;
+    font-weight: 500;
+    color: #222;
+}
+
+.subtitle {
+    font-size: 12px;
+    color: #999;
+    margin-top: 4px;
+}
+
+.topicBadge {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 500;
+    color: #2563eb;
+    background: #eff6ff;
+    padding: 4px 10px;
+    border-radius: 999px;
+    margin-bottom: 8px;
+    width: fit-content;
+}
+
+
+/* 모달창 */
+.modalContent {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.modalTitle {
+    font-size: 18px;
+    font-weight: 600;
+    margin-top: 8px;
+    margin-bottom: 4px;
+}
+
+.modalSubtitle {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 4px;
+}
+
+.modalDate {
+    font-size: 12px;
+    color: #999;
+    margin-bottom: 20px;
+}
+
+.modalBody {
+    flex: 1;
+    overflow-y: auto;
+    line-height: 1.7;
+    font-size: 14px;
+    color: #333;
+    white-space: pre-wrap;
+    text-align: left;
+}

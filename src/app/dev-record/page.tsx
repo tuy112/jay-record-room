@@ -1,8 +1,8 @@
 'use client'
 import { useState } from 'react';
 
-import Header from '../../component/Header/Header';
-import Footer from '../../component/Footer/Footer';
+import Header from '../../components/header';
+import Footer from '../../components/footer';
 
 import { devRecordData } from '@/lib/data/devRecord/devRecordData';
 import styles from "./page.module.css";

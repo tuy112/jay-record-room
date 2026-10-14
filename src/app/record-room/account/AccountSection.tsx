@@ -1,4 +1,4 @@
-import { EntryType, MONTHS, TYPE_LABELS, CARD_LABELS, fmt } from '../../lib/data/types/account';
+import { EntryType, MONTHS, TYPE_LABELS, CARD_LABELS, fmt } from '../../../lib/data/types/account';
 import { useAccountData } from './hooks/useAccountData';
 // import AddEntryModal from './AddEntryModal'; // 추가 로직
 // import EditAssetModal from './EditAssetModal'; // 수정 로직

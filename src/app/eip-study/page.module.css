@@ -1,0 +1,152 @@
+/* 상세페이지 css */
+.detailPage {
+    width: 100%;
+    min-height: 100vh;
+    background: #f8fafc;
+    padding: 90px 24px 80px;
+}
+
+.detailPageInner {
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+.detailPageHeader {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.detailPageHeader h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.detailPageHeader p {
+    font-size: 14px;
+    color: #64748b;
+}
+
+.detailPageContent {
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* 공부방 모달창 */
+.modalContent {
+    display: flex;
+    flex-direction: column;
+}
+
+.topicBadge {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 500;
+    color: #2563eb;
+    background: #eff6ff;
+    padding: 4px 10px;
+    border-radius: 999px;
+    margin-bottom: 8px;
+    width: fit-content;
+}
+
+.modalTitle {
+    font-size: 18px;
+    font-weight: 600;
+    margin-top: 8px;
+    margin-bottom: 4px;
+}
+
+.modalSubtitle {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 4px;
+}
+
+.modalDate {
+    font-size: 12px;
+    color: #999;
+    margin-bottom: 20px;
+}
+
+.modalBody {
+    line-height: 1.7;
+    font-size: 14px;
+    color: #333;
+    text-align: left;
+}
+
+.modalFooter {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 24px;
+}
+
+.sectionLabel {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0 0 10px;
+}
+
+.memorySection {
+    margin-top: 28px;
+}
+
+.memoryBox {
+    background: #eef2ff;
+    border: 1px solid #c7d2fe;
+    border-radius: 10px;
+    padding: 16px 18px;
+}
+
+.quizSection {
+    margin-top: 28px;
+}
+
+.editButton {
+    font-size: 13px;
+    color: #666;
+    background: transparent;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 8px 16px;
+    cursor: pointer;
+}
+
+.editButton:hover {
+    background: #f5f5f5;
+}
+
+/* 탭 분리 */
+.tabs {
+    display: flex;
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    border-bottom: none;
+    border-radius: 12px 12px 0 0;
+    margin-bottom: 0;
+    padding: 0 8px;
+}
+
+.tabButton {
+    border: none;
+    background: none;
+    padding: 15px 25px;
+    font-size: 13px;
+    color: #8c8c8c;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.tabButton:hover {
+    color: #1e2b4f;
+}
+
+.tabButtonActive {
+    color: #1e2b4f;
+    font-weight: 700;
+    border-bottom: 2px solid #1e2b4f;
+}
