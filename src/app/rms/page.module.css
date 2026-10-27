@@ -1,872 +1,506 @@
+/* ========================================
+   페이지
+======================================== */
 .page {
       min-height: 100vh;
-      padding: 58px 24px 80px;
-      background: #f4f7fb;
-      color: #172b4d;
+      padding: 42px 28px 80px;
+      background: #f5f7fb;
+      color: #17243b;
 }
 
-.page,
-.page *,
-.editor,
-.editor *,
-.deleteDialog,
-.deleteDialog * {
-      box-sizing: border-box;
-}
-
-.container {
-      width: 100%;
-      max-width: 1480px;
-      margin: 0 auto;
-}
-
-.pageHeader {
+/* 페이지 헤더 */
+.subHeader {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 24px;
-      margin-bottom: 22px;
+      gap: 20px;
+      max-width: 1500px;
+      margin: 0 auto 26px;
 }
 
-.eyebrow {
-      display: block;
-      color: #8494ab;
+.subHeader small {
+      color: #5071a6;
       font-size: 10px;
-      font-weight: 800;
-      letter-spacing: 1.8px;
-}
-
-.pageHeader h1 {
-      margin: 10px 0;
-      font-size: 29px;
-      font-weight: 800;
-      letter-spacing: -1px;
-      word-break: keep-all;
-}
-
-.pageHeader p {
-      margin: 0;
-      color: #7b8aa0;
-      font-size: 13px;
-      line-height: 1.7;
-}
-
-.primaryButton,
-.secondaryButton,
-.dangerButton,
-.deleteConfirmButton {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 39px;
-      padding: 9px 15px;
-      border: 1px solid transparent;
-      border-radius: 8px;
-      font: inherit;
-      font-size: 12px;
       font-weight: 700;
-      line-height: 1.4;
-      white-space: nowrap;
+      letter-spacing: 1.1px;
+}
+
+.subHeader h1 {
+      margin: 2px 0;
+      font-size: 27px;
+}
+
+.subHeader p {
+      margin: 0;
+      color: #718096;
+      font-size: 13px;
+}
+
+/* 공통 버튼 */
+.primary {
+      padding: 10px 16px;
+      border: 1px solid #2253a4;
+      border-radius: 10px;
+      background: #2253a4;
+      color: #fff;
+      font-weight: 700;
       cursor: pointer;
 }
 
-.primaryButton {
-      background: #24446b;
-      color: #ffffff;
+.primary:hover {
+      background: #1b4385;
 }
 
-.primaryButton:hover {
-      background: #315984;
-}
-
-.primaryButton:disabled {
-      opacity: 0.45;
+.primary:disabled {
+      opacity: 0.5;
       cursor: not-allowed;
 }
 
-.secondaryButton {
-      border-color: #dfe6ef;
-      background: #ffffff;
-      color: #526680;
-}
-
-.secondaryButton:hover {
-      background: #f3f6fa;
-}
-
-.dangerButton {
-      border-color: #f1dddd;
-      background: #fff7f7;
-      color: #c66363;
-}
-
-.dangerButton:hover {
-      background: #ffeded;
-}
-
-.deleteConfirmButton {
-      background: #c35f5f;
-      color: #ffffff;
-}
-
-.storageNotice {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 20px;
-      color: #8897aa;
-      font-size: 11px;
-      line-height: 1.6;
-}
-
-.storageDot {
-      width: 6px;
-      height: 6px;
-      flex-shrink: 0;
-      border-radius: 50%;
-      background: #75a89a;
-}
-
-.notice,
-.errorMessage {
-      margin: 0 0 18px;
-      padding: 12px 15px;
-      border-radius: 9px;
-      font-size: 12px;
-      line-height: 1.7;
-}
-
-.notice {
-      border: 1px solid #d7eae2;
-      background: #edf8f2;
-      color: #387760;
-}
-
-.errorMessage {
-      border: 1px solid #f0d9d9;
-      background: #fff3f3;
-      color: #b35d5d;
-}
-
-.workspace {
-      overflow: hidden;
-      border: 1px solid #dfe7f0;
-      border-radius: 16px;
-      background: #ffffff;
-      box-shadow: 0 8px 30px rgb(25 48 80 / 3%);
-}
-
-.menuBar {
-      display: flex;
-      gap: 3px;
-      padding: 8px;
-      overflow-x: auto;
-      background: #203d60;
-      scrollbar-width: thin;
-      scrollbar-color: #65809f #203d60;
-}
-
-.menuButton {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      flex: 1 0 auto;
-      gap: 7px;
-      min-height: 43px;
-      padding: 10px 12px;
-      border: 0;
-      border-radius: 7px;
-      background: transparent;
-      color: #cbd7e7;
-      font: inherit;
-      font-size: 12px;
-      font-weight: 600;
-      white-space: nowrap;
-      cursor: pointer;
-}
-
-.menuButton:hover {
-      background: rgb(255 255 255 / 7%);
-      color: #ffffff;
-}
-
-.menuButton > span {
-      color: #9aafc9;
-      font-size: 10px;
-      font-weight: 500;
-}
-
-.menuActive,
-.menuActive:hover {
-      background: #ffffff;
-      color: #24446b;
-      font-weight: 800;
-}
-
-.menuActive > span {
-      color: #6e88a8;
-}
-
-.subMenuBar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      padding: 14px 22px;
-      border-bottom: 1px solid #e6edf5;
-      background: #f7f9fc;
-}
-
-.subMenuBar button {
-      min-height: 34px;
-      padding: 7px 14px;
-      border: 1px solid transparent;
-      border-radius: 6px;
-      background: transparent;
-      color: #7c8a9d;
-      font: inherit;
-      font-size: 12px;
-      cursor: pointer;
-}
-
-.subMenuBar button:hover {
-      color: #24446b;
-      background: #edf2f8;
-}
-
-.subMenuBar .subMenuActive {
-      border-color: #dbe5f1;
-      background: #ffffff;
-      color: #24446b;
-      font-weight: 700;
-}
-
-.workspaceBody {
-      padding: 26px;
-}
-
-.toolbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      margin-bottom: 24px;
-}
-
-.breadcrumb {
-      margin-bottom: 8px;
-      color: #9aa6b6;
-      font-size: 11px;
-      line-height: 1.6;
-}
-
-.toolbar h2 {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin: 0;
-      font-size: 20px;
-      letter-spacing: -0.6px;
-}
-
-.toolbar h2 > span {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 27px;
-      height: 24px;
-      padding: 0 8px;
-      border-radius: 7px;
-      background: #eef3fa;
-      color: #55759a;
-      font-size: 12px;
-      letter-spacing: 0;
-}
-
-.searchBox {
-      width: 290px;
-      max-width: 100%;
-}
-
-.searchBox input {
-      width: 100%;
-      height: 42px;
-      padding: 0 14px;
-      border: 1px solid #e1e8f0;
-      border-radius: 9px;
-      background: #f9fbfd;
-      color: #304765;
-      font: inherit;
-      font-size: 12px;
-}
-
-.searchBox input::placeholder {
-      color: #9aa7b7;
-}
-
-.contentGrid {
+/* ========================================
+   전체 레이아웃
+======================================== */
+.layout {
       display: grid;
       grid-template-columns: 330px minmax(0, 1fr);
       align-items: start;
-      gap: 22px;
+      gap: 16px;
+      max-width: 1500px;
+      margin: 0 auto;
 }
 
-.listPanel {
+.sidebar,
+.list,
+.detail {
       min-width: 0;
-      overflow: hidden;
-      border: 1px solid #e3eaf2;
-      border-radius: 12px;
+      background: #fff;
+      border: 1px solid #e4e9f1;
+      border-radius: 14px;
+      box-shadow: 0 3px 14px #17243b06;
 }
 
-.listHeading {
+.list,
+.detail {
+      min-height: 500px;
+      overflow: hidden;
+}
+
+/* ========================================
+   RMS 업무 메뉴
+======================================== */
+.sidebar {
+      grid-column: 1 / -1;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 16px;
+      overflow: hidden;
+}
+
+/* 상위 메뉴 */
+.topicRow {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      padding: 15px 17px;
-      border-bottom: 1px solid #e6edf5;
-      background: #f8fafc;
-      color: #63758f;
-      font-size: 12px;
-      font-weight: 700;
+      gap: 24px;
+      padding-bottom: 10px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-behavior: smooth;
 }
 
-.listHeading > span:last-child {
-      color: #9aa7b8;
-      font-size: 11px;
-      font-weight: 400;
-}
-
-.postList {
-      display: flex;
-      flex-direction: column;
-}
-
-.postButton {
-      display: flex;
-      flex-direction: column;
-      gap: 11px;
-      width: 100%;
-      padding: 19px 17px;
+.topicRow button {
+      position: relative;
+      flex-shrink: 0;
+      padding: 10px 2px 5px;
       border: 0;
-      border-bottom: 1px solid #edf1f6;
-      border-left: 3px solid transparent;
-      background: #ffffff;
-      color: #233b5c;
-      text-align: left;
-      font: inherit;
+      background: transparent;
+      color: #64748b;
+      font-size: 13px;
+      font-weight: 500;
+      white-space: nowrap;
       cursor: pointer;
 }
 
-.postButton:last-child {
-      border-bottom: 0;
+.topicRow button:hover {
+      color: #2253a4;
 }
 
-.postButton:hover {
-      background: #f8fafd;
-}
-
-.postActive,
-.postActive:hover {
-      border-left-color: #406b9b;
-      background: #f0f5fc;
-}
-
-.postMeta {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      width: 100%;
-}
-
-.badge {
-      display: inline-flex;
-      align-items: center;
-      width: fit-content;
-      max-width: 100%;
-      padding: 5px 8px;
-      border: 1px solid #dce7f4;
-      border-radius: 5px;
-      background: #f1f6fd;
-      color: #557ca7;
-      font-size: 10px;
-      font-weight: 600;
-      line-height: 1.5;
-      overflow-wrap: anywhere;
-}
-
-.postMeta time {
-      flex-shrink: 0;
-      color: #9ba7b8;
-      font-size: 10px;
-      white-space: nowrap;
-}
-
-.postButton > strong {
-      display: -webkit-box;
-      overflow: hidden;
-      font-size: 14px;
+.topicRow .topicActive {
+      color: #2253a4;
       font-weight: 700;
-      line-height: 1.6;
-      overflow-wrap: anywhere;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
 }
 
-.postSummary {
-      display: -webkit-box;
-      overflow: hidden;
-      color: #8a98ac;
-      font-size: 12px;
-      line-height: 1.6;
-      overflow-wrap: anywhere;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
+.topicRow .topicActive::after {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      height: 2px;
+      border-radius: 2px;
+      background: #2253a4;
+      content: '';
 }
 
-.pagination {
-      padding: 14px 8px;
-      border-top: 1px solid #edf1f6;
-}
-
-.detailPanel {
-      min-width: 0;
-      min-height: 570px;
-      padding: 27px;
-      border: 1px solid #e3eaf2;
-      border-radius: 12px;
-      background: #ffffff;
-}
-
-.detailTop {
+/* 하위 메뉴 */
+.subtopicRow {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 14px;
-      margin-bottom: 24px;
+      gap: 8px;
+      padding-top: 12px;
+      border-top: 1px solid #edf0f5;
+      overflow-x: auto;
+      scrollbar-width: none;
 }
 
-.detailActions {
-      display: flex;
+.subtopicRow button {
       flex-shrink: 0;
-      gap: 7px;
-}
-
-.detailActions button {
-      min-height: 32px;
-      padding: 6px 11px;
-      font-size: 11px;
-}
-
-.detailTitle {
-      margin: 0 0 12px;
-      color: #1d3555;
-      font-size: 24px;
-      font-weight: 800;
-      line-height: 1.5;
-      letter-spacing: -0.7px;
-      overflow-wrap: anywhere;
-}
-
-.detailSummary {
-      margin: 0 0 19px;
-      color: #7f8da1;
-      font-size: 13px;
-      line-height: 1.8;
-      overflow-wrap: anywhere;
-}
-
-.detailDates {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-      padding-bottom: 22px;
-      border-bottom: 1px solid #e9eef5;
-      color: #9ca8b8;
-      font-size: 11px;
-}
-
-.analysisBody {
-      min-width: 0;
-      margin-top: 25px;
-      color: #40536d;
-      font-size: 14px;
-      line-height: 1.9;
-      overflow-wrap: anywhere;
-}
-
-.analysisBody pre {
-      max-width: 100%;
-      overflow-x: auto;
-      white-space: pre;
-}
-
-.analysisBody img {
-      max-width: 100%;
-      height: auto;
-}
-
-.analysisBody table {
-      display: block;
-      max-width: 100%;
-      overflow-x: auto;
-}
-
-.plainContent {
-      white-space: pre-wrap;
-      overflow-wrap: anywhere;
-      tab-size: 6;
-}
-
-.empty {
-      padding: 48px 20px;
-      color: #94a1b3;
-      text-align: center;
+      padding: 8px 13px;
+      border: 1px solid #e4e9f1;
+      border-radius: 8px;
+      background: #f8fafc;
+      color: #64748b;
       font-size: 12px;
-      line-height: 1.8;
+      white-space: nowrap;
+      cursor: pointer;
 }
 
-.empty strong {
-      display: block;
-      color: #73849b;
-      font-size: 13px;
+.subtopicRow button:hover {
+      background: #eef4ff;
+      color: #2253a4;
 }
 
-.empty p {
-      margin: 10px 0 0;
+.subtopicRow .subtopicActive {
+      border-color: #c9dcff;
+      background: #eaf1ff;
+      color: #2253a4;
+      font-weight: 700;
 }
 
-.detailEmpty {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      min-height: 510px;
-      text-align: center;
+/* ========================================
+   분석 기록 목록
+======================================== */
+.panelTitle {
+      padding: 18px;
+      border-bottom: 1px solid #e4e9f1;
 }
 
-.detailEmpty > span {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 58px;
-      height: 58px;
-      margin-bottom: 20px;
-      border-radius: 17px;
-      background: #f0f4f9;
-      color: #9fb2ca;
-      font-size: 32px;
-}
-
-.detailEmpty h3 {
-      margin: 0 0 12px;
-      color: #71839c;
+.panelTitle h2 {
+      margin: 0 0 14px;
       font-size: 16px;
 }
 
-.detailEmpty p {
-      margin: 0;
-      color: #a0acbc;
-      font-size: 12px;
-      line-height: 1.9;
+.panelTitle h2 span {
+      margin-left: 6px;
+      color: #3266b7;
 }
 
-.editor {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
+.panelTitle input {
+      box-sizing: border-box;
       width: 100%;
-      min-width: 0;
-      max-height: 78dvh;
-      padding: 12px;
-      overflow-y: auto;
-      color: #233b5c;
-}
-
-.editorHeading h2,
-.deleteDialog h2 {
-      margin: 9px 0;
-      color: #203856;
-      font-size: 23px;
-      letter-spacing: -0.7px;
-}
-
-.editorHeading p {
-      margin: 0;
-      color: #8b98aa;
-      font-size: 12px;
-      line-height: 1.7;
-}
-
-.formGrid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 16px;
-}
-
-.field {
-      display: flex;
-      flex-direction: column;
-      gap: 9px;
-      min-width: 0;
-}
-
-.field > span {
-      color: #526680;
-      font-size: 12px;
-      font-weight: 700;
-}
-
-.field input,
-.field select,
-.field textarea {
-      width: 100%;
-      min-width: 0;
-      padding: 12px;
-      border: 1px solid #dfe6ef;
+      padding: 11px;
+      border: 1px solid #dbe2eb;
       border-radius: 8px;
-      background: #ffffff;
-      color: #334a66;
-      font: inherit;
-      font-size: 13px;
-      line-height: 1.7;
+      outline: none;
 }
 
-.field input::placeholder,
-.field textarea::placeholder {
-      color: #a2adbd;
+.panelTitle input:focus {
+      border-color: #2253a4;
 }
 
-.field select:disabled {
-      background: #f4f6f9;
-      color: #9aa7b8;
+/* 게시글 */
+.post {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      width: 100%;
+      padding: 19px;
+      border: 0;
+      border-bottom: 1px solid #edf0f5;
+      background: #fff;
+      text-align: left;
+      cursor: pointer;
 }
 
-.field textarea {
-      min-height: 290px;
-      resize: vertical;
-      tab-size: 6;
+.post:hover,
+.selected {
+      background: #f1f6ff;
 }
 
-.field .codeInput {
-      font-family: Consolas, Monaco, monospace;
-      font-size: 12px;
-      white-space: pre;
-}
-
-.fieldHelp {
-      color: #9a8559;
+.post small {
+      color: #64748b;
       font-size: 11px;
-      line-height: 1.7;
 }
 
-.editorActions {
+.post strong {
+      color: #1e293b;
+      font-size: 14px;
+}
+
+.post span {
+      overflow: hidden;
+      color: #7b8797;
+      font-size: 12px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+}
+
+/* ========================================
+   분석 기록 상세
+======================================== */
+.detail {
+      min-height: 500px;
+      padding: 28px;
+}
+
+.detail h2 {
+      margin: 20px 0 10px;
+      font-size: 24px;
+      line-height: 1.4;
+}
+
+/* 상세 상단 및 버튼 */
+.detailTop,
+.actions {
       display: flex;
       align-items: center;
-      justify-content: flex-end;
+      justify-content: space-between;
       gap: 8px;
-      padding-top: 17px;
-      border-top: 1px solid #e8edf4;
 }
 
-.editor > .errorMessage {
-      margin-bottom: 0;
+.actions {
+      justify-content: flex-end;
 }
 
-.deleteDialog {
-      padding: 20px 12px;
-      color: #7c8b9f;
-      font-size: 13px;
-      line-height: 1.8;
-}
-
-.deleteTitle {
-      margin-top: 20px;
-      padding: 14px;
+.actions button {
+      padding: 10px 16px;
+      border: 1px solid #dce3ec;
       border-radius: 8px;
-      background: #f5f7fa;
-      color: #425875;
+      background: #fff;
+      color: #344054;
+      cursor: pointer;
+}
+
+.actions button:hover {
+      background: #f8fafc;
+}
+
+.actions button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+}
+
+.actions .primary {
+      border-color: #2253a4;
+      background: #2253a4;
+      color: #fff;
+}
+
+.actions .primary:hover {
+      background: #1b4385;
+}
+
+.danger {
+      color: #c03636 !important;
+}
+
+/* 분류 표시 */
+.tag {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 6px;
+      background: #eaf1ff;
+      color: #2253a4;
+      font-size: 12px;
       font-weight: 700;
+}
+
+/* 상세 내용 */
+.subtitle {
+      color: #667085;
+      font-size: 14px;
+}
+
+.date {
+      padding-bottom: 20px;
+      border-bottom: 1px solid #edf0f5;
+      color: #98a2b3;
+      font-size: 12px;
+}
+
+.content {
+      padding-top: 14px;
+      font-size: 14px;
+      line-height: 1.9;
       overflow-wrap: anywhere;
+      white-space: pre-wrap;
 }
 
-.deleteDialog .editorActions {
-      margin-top: 25px;
+/* ========================================
+   등록 및 수정
+======================================== */
+.form {
+      display: flex;
+      flex-direction: column;
+      gap: 17px;
 }
 
-.page button:focus-visible,
-.page input:focus-visible,
-.editor button:focus-visible,
-.editor input:focus-visible,
-.editor select:focus-visible,
-.editor textarea:focus-visible,
-.deleteDialog button:focus-visible {
-      outline: 2px solid #739bc4;
-      outline-offset: 2px;
+.form h2 {
+      margin: 0 0 8px;
 }
 
-.srOnly {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border: 0;
+.form label {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      font-size: 13px;
+      font-weight: 600;
 }
 
+.form input,
+.form select,
+.form textarea {
+      box-sizing: border-box;
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #dbe2eb;
+      border-radius: 8px;
+      outline: none;
+      font: inherit;
+      font-weight: 400;
+}
+
+.form input:focus,
+.form select:focus,
+.form textarea:focus {
+      border-color: #2253a4;
+}
+
+.form textarea {
+      resize: vertical;
+      line-height: 1.6;
+}
+
+/* ========================================
+   안내 메시지
+======================================== */
+.empty {
+      padding: 60px 12px;
+      color: #94a3b8;
+      text-align: center;
+      font-size: 14px;
+}
+
+.notice,
+.error {
+      max-width: 1500px;
+      margin: 0 auto 15px;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+}
+
+.notice {
+      background: #e8f8ee;
+      color: #166534;
+}
+
+.error {
+      background: #fff0f0;
+      color: #b42318;
+}
+
+/* ========================================
+   태블릿
+======================================== */
 @media (max-width: 1100px) {
-      .contentGrid {
-            grid-template-columns: 285px minmax(0, 1fr);
-            gap: 16px;
-      }
-
-      .workspaceBody {
-            padding: 20px;
-      }
-
-      .detailPanel {
-            padding: 22px;
+      .layout {
+            grid-template-columns: 280px minmax(0, 1fr);
       }
 }
 
-@media (max-width: 800px) {
+/* ========================================
+   모바일
+======================================== */
+@media (max-width: 700px) {
       .page {
-            padding: 36px 18px 60px;
+            padding: 24px 12px 60px;
       }
 
-      .pageHeader {
+      .subHeader {
             align-items: flex-start;
+            gap: 12px;
       }
 
-      .pageHeader h1 {
-            font-size: 25px;
+      .subHeader h1 {
+            font-size: 23px;
       }
 
-      .contentGrid {
-            grid-template-columns: minmax(0, 1fr);
-      }
-
-      .detailPanel {
-            min-height: 350px;
-      }
-
-      .detailEmpty {
-            min-height: 300px;
-      }
-
-      .postList {
-            max-height: 400px;
-            overflow-y: auto;
-      }
-}
-
-@media (max-width: 560px) {
-      .page {
-            padding: 28px 12px 45px;
-      }
-
-      .pageHeader {
-            flex-direction: column;
-            gap: 18px;
-      }
-
-      .pageHeader h1 {
-            font-size: 24px;
-      }
-
-      .pageHeader p {
+      .subHeader p {
             font-size: 12px;
       }
 
-      .pageHeader > button {
-            width: 100%;
-      }
-
-      .storageNotice {
-            font-size: 10px;
-      }
-
-      .workspace {
-            border-radius: 12px;
-      }
-
-      .menuBar {
-            padding: 7px;
-      }
-
-      .menuButton {
-            min-height: 40px;
+      .subHeader .primary {
+            flex-shrink: 0;
             padding: 9px 12px;
+            font-size: 12px;
+            white-space: nowrap;
       }
 
-      .subMenuBar {
-            gap: 4px;
-            padding: 10px;
-      }
-
-      .subMenuBar button {
-            padding: 7px 10px;
-            font-size: 11px;
-      }
-
-      .workspaceBody {
-            padding: 15px;
-      }
-
-      .toolbar {
-            align-items: stretch;
+      .layout {
+            display: flex;
             flex-direction: column;
-            gap: 16px;
-            margin-bottom: 18px;
       }
 
-      .searchBox {
+      .sidebar,
+      .list,
+      .detail {
+            box-sizing: border-box;
             width: 100%;
+            min-height: 0;
       }
 
-      .toolbar h2 {
-            font-size: 18px;
+      /* 모바일 업무 메뉴 */
+      .sidebar {
+            gap: 8px;
+            padding: 12px;
       }
 
-      .detailPanel {
-            padding: 18px;
+      .topicRow {
+            gap: 18px;
+            padding-bottom: 8px;
+            overscroll-behavior-x: contain;
+            -webkit-overflow-scrolling: touch;
       }
 
-      .detailTop {
-            align-items: flex-start;
-            flex-direction: column;
-            gap: 15px;
+      .topicRow button {
+            font-size: 12px;
       }
 
-      .detailActions {
-            align-self: flex-end;
+      /* 모바일 하위 메뉴 */
+      .subtopicRow {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            overflow: visible;
       }
 
-      .detailTitle {
-            font-size: 21px;
+      .subtopicRow button {
+            flex: 0 0 auto;
+            padding: 7px 11px;
+            font-size: 11px;
+            white-space: nowrap;
       }
 
-      .analysisBody {
-            font-size: 13px;
+      /* 모바일 상세 */
+      .detail {
+            padding: 20px;
       }
 
-      .formGrid {
-            grid-template-columns: minmax(0, 1fr);
-      }
-
-      .editor {
-            padding: 5px;
-      }
-
-      .editorHeading h2,
-      .deleteDialog h2 {
+      .detail h2 {
             font-size: 20px;
       }
 
-      .field input,
-      .field select,
-      .field textarea {
-            font-size: 16px;
+      .actions button {
+            padding: 8px 12px;
+            font-size: 12px;
       }
 }

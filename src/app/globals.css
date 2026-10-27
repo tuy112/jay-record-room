@@ -47,3 +47,27 @@ a {
     color-scheme: dark;
   }
 } */
+
+/* 공통 스크롤바 */
+.customScroll {
+      scrollbar-width: thin;
+      scrollbar-color: #b8c8df transparent;
+}
+
+.customScroll::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+}
+
+.customScroll::-webkit-scrollbar-track {
+      background: transparent;
+}
+
+.customScroll::-webkit-scrollbar-thumb {
+      background: #b8c8df;
+      border-radius: 10px;
+}
+
+.customScroll::-webkit-scrollbar-thumb:hover {
+      background: #7e9bc4;
+}
