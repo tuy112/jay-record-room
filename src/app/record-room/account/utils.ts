@@ -1,5 +1,5 @@
 // 순수 계산 함수 모음
-import { DailyExpense, Entry, EntryType, CardType } from '../../lib/data/types/account';
+import { DailyExpense, Entry, EntryType, CardType } from '../../../lib/data/types/account';
 
 /** 특정 타입 항목 합계 (예: 수입 전체) */
 export function sumByType(entries: Entry[], type: EntryType): number {

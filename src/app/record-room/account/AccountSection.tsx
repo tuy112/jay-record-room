@@ -1,4 +1,4 @@
-import { EntryType, MONTHS, TYPE_LABELS, CARD_LABELS, fmt } from '../../../lib/data/types/account';
+import { EntryType, CardType, MONTHS, TYPE_LABELS, CARD_LABELS, fmt } from '../../../lib/data/types/account';
 import { useAccountData } from './hooks/useAccountData';
 // import AddEntryModal from './AddEntryModal'; // 추가 로직
 // import EditAssetModal from './EditAssetModal'; // 수정 로직
@@ -154,7 +154,7 @@ export default function AccountSection() {
                                                                   <div key={i} className={styles.entryRow}>
                                                                         <span className={styles.entryLabel}>{item.label}</span>
                                                                         <span className={`${styles.cardBadge} ${styles[`badge_${item.cardType}`]}`}>
-                                                                              {CARD_LABELS[item.cardType]}
+                                                                              {CARD_LABELS[item.cardType as CardType]}
                                                                         </span>
                                                                         <span className={`${styles.entryAmount} ${styles.amount_expense}`}>
                                                                               -{fmt(item.amount)}
