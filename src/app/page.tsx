@@ -1,4 +1,10 @@
+'use client';
+
 import Link from "next/link";
+
+import Header from '../components/header';
+import Footer from '../components/footer';
+
 import styles from "./page.module.css";
 
 const money = (value: number) =>
@@ -145,322 +151,326 @@ export default function HomePage() {
       ];
 
       return (
-            <main className={styles.page}>
-                  <div className={styles.container}>
-                        <header className={styles.pageHeader}>
-                              <div>
-                                    <p className={styles.eyebrow}>
-                                          MY PERSONAL SPACE
-                                    </p>
-                                    <h1>나의 기록 대시보드</h1>
-                                    <p className={styles.description}>
-                                          일상부터 공부까지, Jay님의 기록을 한곳에서.
-                                    </p>
-                              </div>
+            <>
+                  <Header />
+            
+                  <main className={styles.page}>
+                        <div className={styles.container}>
+                              <header className={styles.pageHeader}>
+                                    <div>
+                                          <p className={styles.eyebrow}>
+                                                MY PERSONAL SPACE
+                                          </p>
+                                          <h1>Jay Record Room</h1>
+                                          <p className={styles.description}>
+                                                일상부터 공부까지
+                                          </p>
+                                    </div>
 
-                              <div className={styles.headerActions}>
-                                    <span className={styles.sampleBadge}>
-                                          예시 데이터
-                                    </span>
-                                    <Link
-                                          href="/diary"
-                                          className={styles.primaryButton}
-                                    >
-                                          오늘의 일기 쓰기 <span>↗</span>
-                                    </Link>
-                              </div>
-                        </header>
+                                    <div className={styles.headerActions}>
+                                          <span className={styles.sampleBadge}>
+                                                예시 데이터
+                                          </span>
+                                          <Link
+                                                href="/diary"
+                                                className={styles.primaryButton}
+                                          >
+                                                오늘의 일기 쓰기 <span>↗</span>
+                                          </Link>
+                                    </div>
+                              </header>
 
-                        <section
-                              className={styles.statsGrid}
-                              aria-label="기록 요약"
-                        >
-                              {stats.map((stat) => (
-                                    <article
-                                          className={styles.statCard}
-                                          key={stat.label}
-                                    >
-                                          <div className={styles.statTop}>
-                                                <span>{stat.label}</span>
+                              <section
+                                    className={styles.statsGrid}
+                                    aria-label="기록 요약"
+                              >
+                                    {stats.map((stat) => (
+                                          <article
+                                                className={styles.statCard}
+                                                key={stat.label}
+                                          >
+                                                <div className={styles.statTop}>
+                                                      <span>{stat.label}</span>
+                                                      <span
+                                                            className={`${styles.smallIcon} ${styles[stat.tone]}`}
+                                                            aria-hidden="true"
+                                                      >
+                                                            {stat.symbol}
+                                                      </span>
+                                                </div>
+                                                <strong className={styles.statValue}>
+                                                      {stat.value}
+                                                </strong>
+                                                <p className={styles.statNote}>
+                                                      {stat.note}
+                                                </p>
+                                          </article>
+                                    ))}
+                              </section>
+
+                              <div className={styles.dashboardGrid}>
+                                    <section className={styles.panel}>
+                                          <div className={styles.panelHeader}>
+                                                <div>
+                                                      <p className={styles.eyebrow}>
+                                                            MONTHLY FINANCE
+                                                      </p>
+                                                      <h2>이번 달 가계부</h2>
+                                                </div>
+                                                <Link
+                                                      href="/record-room"
+                                                      className={styles.textLink}
+                                                >
+                                                      자세히 <span>↗</span>
+                                                </Link>
+                                          </div>
+
+                                          <div className={styles.balanceCard}>
+                                                <div>
+                                                      <span>이번 달 남은 금액</span>
+                                                      <strong>{money(balance)}</strong>
+                                                </div>
                                                 <span
-                                                      className={`${styles.smallIcon} ${styles[stat.tone]}`}
+                                                      className={styles.balanceSymbol}
                                                       aria-hidden="true"
                                                 >
-                                                      {stat.symbol}
+                                                      ₩
                                                 </span>
+                                                <p>수입 − 저축 − 지출 기준</p>
                                           </div>
-                                          <strong className={styles.statValue}>
-                                                {stat.value}
-                                          </strong>
-                                          <p className={styles.statNote}>
-                                                {stat.note}
-                                          </p>
-                                    </article>
-                              ))}
-                        </section>
 
-                        <div className={styles.dashboardGrid}>
-                              <section className={styles.panel}>
-                                    <div className={styles.panelHeader}>
-                                          <div>
-                                                <p className={styles.eyebrow}>
-                                                      MONTHLY FINANCE
-                                                </p>
-                                                <h2>이번 달 가계부</h2>
-                                          </div>
-                                          <Link
-                                                href="/record-room"
-                                                className={styles.textLink}
-                                          >
-                                                자세히 <span>↗</span>
-                                          </Link>
-                                    </div>
-
-                                    <div className={styles.balanceCard}>
-                                          <div>
-                                                <span>이번 달 남은 금액</span>
-                                                <strong>{money(balance)}</strong>
-                                          </div>
-                                          <span
-                                                className={styles.balanceSymbol}
-                                                aria-hidden="true"
-                                          >
-                                                ₩
-                                          </span>
-                                          <p>수입 − 저축 − 지출 기준</p>
-                                    </div>
-
-                                    <div className={styles.moneyGrid}>
-                                          <div>
-                                                <span>수입</span>
-                                                <strong className={styles.income}>
-                                                      +{money(dashboard.income)}
-                                                </strong>
-                                          </div>
-                                          <div>
-                                                <span>저축</span>
-                                                <strong className={styles.savings}>
-                                                      {money(dashboard.savings)}
-                                                </strong>
-                                          </div>
-                                          <div>
-                                                <span>지출</span>
-                                                <strong className={styles.expense}>
-                                                      -{money(dashboard.expense)}
-                                                </strong>
-                                          </div>
-                                    </div>
-
-                                    <div className={styles.budgetHeading}>
-                                          <span>월 지출 예산</span>
-                                          <strong>
-                                                {budgetRate}%
-                                                <span> 사용</span>
-                                          </strong>
-                                    </div>
-
-                                    <div
-                                          className={styles.progressTrack}
-                                          role="progressbar"
-                                          aria-label="월 지출 예산 사용률"
-                                          aria-valuemin={0}
-                                          aria-valuemax={100}
-                                          aria-valuenow={budgetRate}
-                                    >
-                                          <div
-                                                className={styles.progressFill}
-                                                style={{ width: `${budgetRate}%` }}
-                                          />
-                                    </div>
-
-                                    <div className={styles.budgetFooter}>
-                                          <span>예산 {money(dashboard.budget)}</span>
-                                          <span>
-                                                {money(
-                                                      dashboard.budget -
-                                                            dashboard.expense,
-                                                )} 남음
-                                          </span>
-                                    </div>
-                              </section>
-
-                              <section className={styles.panel}>
-                                    <div className={styles.panelHeader}>
-                                          <div>
-                                                <p className={styles.eyebrow}>
-                                                      WEEKLY ACTIVITY
-                                                </p>
-                                                <h2>한 주의 움직임</h2>
-                                          </div>
-                                          <span className={styles.unitBadge}>
-                                                단위 · 분
-                                          </span>
-                                    </div>
-
-                                    <div className={styles.activitySummary}>
-                                          <strong>
-                                                {dashboard.exerciseMinutes}
-                                                <span>분</span>
-                                          </strong>
-                                          <p>
-                                                이번 주 {dashboard.exerciseCount}일,
-                                                나를 위한 시간
-                                          </p>
-                                    </div>
-
-                                    <div
-                                          className={styles.barChart}
-                                          role="img"
-                                          aria-label={weeklyExercise
-                                                .map(
-                                                      (item) =>
-                                                            `${item.day}요일 ${item.minutes}분`,
-                                                )
-                                                .join(", ")}
-                                    >
-                                          {weeklyExercise.map((item) => (
-                                                <div
-                                                      className={styles.barColumn}
-                                                      key={item.day}
-                                                >
-                                                      <div className={styles.barArea}>
-                                                            <div
-                                                                  className={
-                                                                        item.minutes > 0
-                                                                              ? styles.bar
-                                                                              : styles.emptyBar
-                                                                  }
-                                                                  style={{
-                                                                        height: `${Math.max(
-                                                                              (item.minutes / 80) * 100,
-                                                                              3,
-                                                                        )}%`,
-                                                                  }}
-                                                            >
-                                                                  <span>
-                                                                        {item.minutes}
-                                                                  </span>
-                                                            </div>
-                                                      </div>
-                                                      <span className={styles.dayLabel}>
-                                                            {item.day}
-                                                      </span>
-                                                </div>
-                                          ))}
-                                    </div>
-
-                                    <div className={styles.panelFooter}>
-                                          <span>
-                                                작은 기록이 꾸준한 습관이 됩니다.
-                                          </span>
-                                          <Link
-                                                href="/record-room"
-                                                className={styles.textLink}
-                                          >
-                                                운동기록 ↗
-                                          </Link>
-                                    </div>
-                              </section>
-
-                              <section className={styles.panel}>
-                                    <div className={styles.panelHeader}>
-                                          <div>
-                                                <p className={styles.eyebrow}>
-                                                      SPENDING REPORT
-                                                </p>
-                                                <h2>어디에 썼을까요?</h2>
-                                          </div>
-                                    </div>
-
-                                    <div
-                                          className={styles.donut}
-                                          role="img"
-                                          aria-label="지출 구성: 식비 15만원, 생활 9만원, 교통 6만원, 기타 5만원"
-                                    >
-                                          <div className={styles.donutCenter}>
-                                                <span>총 지출</span>
-                                                <strong>
-                                                      {money(dashboard.expense)}
-                                                </strong>
-                                          </div>
-                                    </div>
-
-                                    <div className={styles.legend}>
-                                          {expenseCategories.map((item) => (
-                                                <div
-                                                      className={styles.legendRow}
-                                                      key={item.name}
-                                                >
-                                                      <span className={styles.legendName}>
-                                                            <i
-                                                                  style={{
-                                                                        backgroundColor: item.color,
-                                                                  }}
-                                                            />
-                                                            {item.name}
-                                                      </span>
-                                                      <strong>
-                                                            {money(item.amount)}
+                                          <div className={styles.moneyGrid}>
+                                                <div>
+                                                      <span>수입</span>
+                                                      <strong className={styles.income}>
+                                                            +{money(dashboard.income)}
                                                       </strong>
                                                 </div>
+                                                <div>
+                                                      <span>저축</span>
+                                                      <strong className={styles.savings}>
+                                                            {money(dashboard.savings)}
+                                                      </strong>
+                                                </div>
+                                                <div>
+                                                      <span>지출</span>
+                                                      <strong className={styles.expense}>
+                                                            -{money(dashboard.expense)}
+                                                      </strong>
+                                                </div>
+                                          </div>
+
+                                          <div className={styles.budgetHeading}>
+                                                <span>월 지출 예산</span>
+                                                <strong>
+                                                      {budgetRate}%
+                                                      <span> 사용</span>
+                                                </strong>
+                                          </div>
+
+                                          <div
+                                                className={styles.progressTrack}
+                                                role="progressbar"
+                                                aria-label="월 지출 예산 사용률"
+                                                aria-valuemin={0}
+                                                aria-valuemax={100}
+                                                aria-valuenow={budgetRate}
+                                          >
+                                                <div
+                                                      className={styles.progressFill}
+                                                      style={{ width: `${budgetRate}%` }}
+                                                />
+                                          </div>
+
+                                          <div className={styles.budgetFooter}>
+                                                <span>예산 {money(dashboard.budget)}</span>
+                                                <span>
+                                                      {money(
+                                                            dashboard.budget -
+                                                                  dashboard.expense,
+                                                      )} 남음
+                                                </span>
+                                          </div>
+                                    </section>
+
+                                    <section className={styles.panel}>
+                                          <div className={styles.panelHeader}>
+                                                <div>
+                                                      <p className={styles.eyebrow}>
+                                                            WEEKLY ACTIVITY
+                                                      </p>
+                                                      <h2>한 주의 움직임</h2>
+                                                </div>
+                                                <span className={styles.unitBadge}>
+                                                      단위 · 분
+                                                </span>
+                                          </div>
+
+                                          <div className={styles.activitySummary}>
+                                                <strong>
+                                                      {dashboard.exerciseMinutes}
+                                                      <span>분</span>
+                                                </strong>
+                                                <p>
+                                                      이번 주 {dashboard.exerciseCount}일,
+                                                      나를 위한 시간
+                                                </p>
+                                          </div>
+
+                                          <div
+                                                className={styles.barChart}
+                                                role="img"
+                                                aria-label={weeklyExercise
+                                                      .map(
+                                                            (item) =>
+                                                                  `${item.day}요일 ${item.minutes}분`,
+                                                      )
+                                                      .join(", ")}
+                                          >
+                                                {weeklyExercise.map((item) => (
+                                                      <div
+                                                            className={styles.barColumn}
+                                                            key={item.day}
+                                                      >
+                                                            <div className={styles.barArea}>
+                                                                  <div
+                                                                        className={
+                                                                              item.minutes > 0
+                                                                                    ? styles.bar
+                                                                                    : styles.emptyBar
+                                                                        }
+                                                                        style={{
+                                                                              height: `${Math.max(
+                                                                                    (item.minutes / 80) * 100,
+                                                                                    3,
+                                                                              )}%`,
+                                                                        }}
+                                                                  >
+                                                                        <span>
+                                                                              {item.minutes}
+                                                                        </span>
+                                                                  </div>
+                                                            </div>
+                                                            <span className={styles.dayLabel}>
+                                                                  {item.day}
+                                                            </span>
+                                                      </div>
+                                                ))}
+                                          </div>
+
+                                          <div className={styles.panelFooter}>
+                                                <span>
+                                                      작은 기록이 꾸준한 습관이 됩니다.
+                                                </span>
+                                                <Link
+                                                      href="/record-room"
+                                                      className={styles.textLink}
+                                                >
+                                                      운동기록 ↗
+                                                </Link>
+                                          </div>
+                                    </section>
+
+                                    <section className={styles.panel}>
+                                          <div className={styles.panelHeader}>
+                                                <div>
+                                                      <p className={styles.eyebrow}>
+                                                            SPENDING REPORT
+                                                      </p>
+                                                      <h2>어디에 썼을까요?</h2>
+                                                </div>
+                                          </div>
+
+                                          <div
+                                                className={styles.donut}
+                                                role="img"
+                                                aria-label="지출 구성: 식비 15만원, 생활 9만원, 교통 6만원, 기타 5만원"
+                                          >
+                                                <div className={styles.donutCenter}>
+                                                      <span>총 지출</span>
+                                                      <strong>
+                                                            {money(dashboard.expense)}
+                                                      </strong>
+                                                </div>
+                                          </div>
+
+                                          <div className={styles.legend}>
+                                                {expenseCategories.map((item) => (
+                                                      <div
+                                                            className={styles.legendRow}
+                                                            key={item.name}
+                                                      >
+                                                            <span className={styles.legendName}>
+                                                                  <i
+                                                                        style={{
+                                                                              backgroundColor: item.color,
+                                                                        }}
+                                                                  />
+                                                                  {item.name}
+                                                            </span>
+                                                            <strong>
+                                                                  {money(item.amount)}
+                                                            </strong>
+                                                      </div>
+                                                ))}
+                                          </div>
+                                    </section>
+                              </div>
+
+                              <section className={styles.roomsSection}>
+                                    <div className={styles.sectionHeader}>
+                                          <div>
+                                                <p className={styles.eyebrow}>
+                                                      MY RECORDS
+                                                </p>
+                                                <h2>나의 기록방</h2>
+                                          </div>
+                                          <p>오늘은 어떤 기록을 남겨볼까요?</p>
+                                    </div>
+
+                                    <div className={styles.roomsGrid}>
+                                          {rooms.map((room) => (
+                                                <Link
+                                                      href={room.href}
+                                                      className={styles.roomCard}
+                                                      key={room.number}
+                                                >
+                                                      <div className={styles.roomTop}>
+                                                            <span
+                                                                  className={`${styles.roomIcon} ${styles[room.tone]}`}
+                                                                  aria-hidden="true"
+                                                            >
+                                                                  {room.symbol}
+                                                            </span>
+                                                            <span className={styles.roomNumber}>
+                                                                  {room.number}
+                                                            </span>
+                                                      </div>
+                                                      <span className={styles.roomCategory}>
+                                                            {room.category}
+                                                      </span>
+                                                      <h3>{room.title}</h3>
+                                                      <p>{room.description}</p>
+                                                      <div className={styles.roomBottom}>
+                                                            <span>기록방 열기</span>
+                                                            <span aria-hidden="true">↗</span>
+                                                      </div>
+                                                </Link>
                                           ))}
+
+                                          <div className={styles.quoteCard}>
+                                                <span aria-hidden="true">“</span>
+                                                <p>
+                                                      기록하는 오늘이
+                                                      <br />
+                                                      내일의 나를 만듭니다.
+                                                </p>
+                                                <small>하루 한 줄, 나만의 속도로.</small>
+                                          </div>
                                     </div>
                               </section>
                         </div>
-
-                        <section className={styles.roomsSection}>
-                              <div className={styles.sectionHeader}>
-                                    <div>
-                                          <p className={styles.eyebrow}>
-                                                MY RECORDS
-                                          </p>
-                                          <h2>나의 기록방</h2>
-                                    </div>
-                                    <p>오늘은 어떤 기록을 남겨볼까요?</p>
-                              </div>
-
-                              <div className={styles.roomsGrid}>
-                                    {rooms.map((room) => (
-                                          <Link
-                                                href={room.href}
-                                                className={styles.roomCard}
-                                                key={room.number}
-                                          >
-                                                <div className={styles.roomTop}>
-                                                      <span
-                                                            className={`${styles.roomIcon} ${styles[room.tone]}`}
-                                                            aria-hidden="true"
-                                                      >
-                                                            {room.symbol}
-                                                      </span>
-                                                      <span className={styles.roomNumber}>
-                                                            {room.number}
-                                                      </span>
-                                                </div>
-                                                <span className={styles.roomCategory}>
-                                                      {room.category}
-                                                </span>
-                                                <h3>{room.title}</h3>
-                                                <p>{room.description}</p>
-                                                <div className={styles.roomBottom}>
-                                                      <span>기록방 열기</span>
-                                                      <span aria-hidden="true">↗</span>
-                                                </div>
-                                          </Link>
-                                    ))}
-
-                                    <div className={styles.quoteCard}>
-                                          <span aria-hidden="true">“</span>
-                                          <p>
-                                                기록하는 오늘이
-                                                <br />
-                                                내일의 나를 만듭니다.
-                                          </p>
-                                          <small>하루 한 줄, 나만의 속도로.</small>
-                                    </div>
-                              </div>
-                        </section>
-                  </div>
-            </main>
+                  </main>
+            </>
       );
 }
