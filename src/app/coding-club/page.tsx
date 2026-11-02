@@ -5,7 +5,7 @@ import { knowledgePosts, KnowledgeItem } from '../../lib/data/knowledge';
 import Header from '../../components/header';
 import Footer from '../../components/footer';
 import CommonModal from '../../components/common/modal';
-import ContentRenderer from '../../components/common/contentRenderer';
+import ContentRenderer from '../../components/common/codeRenderer';
 import Pagination from '../../components/common/pagination';
 
 import styles from './page.module.css';

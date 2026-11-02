@@ -1,4 +1,4 @@
-.contentRenderer {
+.codeRenderer {
       display: flex;
       flex-direction: column;
       gap: 20px;
@@ -101,6 +101,7 @@
       line-height: 1.6;
       white-space: pre;
 }
+
 .codeBlock code {
       font-family: Consolas, Monaco, monospace;
 }

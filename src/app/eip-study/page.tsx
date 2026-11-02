@@ -6,7 +6,7 @@ import Header from '../../components/header';
 import Footer from '../../components/footer';
 import Board from '../../components/common/board';
 import CommonModal from '../../components/common/modal';
-import ContentRenderer from '../../components/common/contentRenderer';
+import ContentRenderer from '../../components/common/codeRenderer';
 import QuizList from '../../components/common/quiz';
 import Pagination from '../../components/common/pagination';
 
