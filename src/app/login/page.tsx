@@ -20,6 +20,7 @@ export default function LoginPage() {
                                     type="text"
                                     placeholder="아이디"
                                     className={styles.loginInput}
+                                    autoComplete="username"
                                     required
                               />
 
@@ -28,6 +29,7 @@ export default function LoginPage() {
                                     type="password"
                                     placeholder="비밀번호"
                                     className={styles.loginInput}
+                                    autoComplete="current-password"
                                     required
                               />
 
