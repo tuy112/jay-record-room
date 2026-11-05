@@ -30,12 +30,12 @@ export async function login(formData: FormData) {
 
             const result = await response.json();
 
-            console.log("[백엔드 응답]");
+            console.log("**백엔드 응답**");
             console.log("HTTP 상태:", response.status);
             console.log("응답 데이터:", result);
 
             if (!response.ok) {
-                  console.error("[로그인 실패]", result);
+                  console.error("**로그인 실패**", result);
                   redirect("/login");
             }
 
@@ -48,19 +48,20 @@ export async function login(formData: FormData) {
                   secure: process.env.NODE_ENV === "production",
             });
 
-            console.log("[로그인 성공]");
-            console.log("사용자 정보:", {
-                  userId: result.userId,
-                  userName: result.userName,
-                  userRole: result.userRole,
+            cookieStore.set("jstory_role", result.userRole, {
+                  httpOnly: true,
+                  path: "/",
+                  sameSite: "lax",
+                  secure: process.env.NODE_ENV === "production",
             });
+
+            console.log("[로그인 성공]");
 
       } catch (error) {
             if (error instanceof Error && error.message === "NEXT_REDIRECT") {
                   throw error;
             }
 
-            console.error("[로그인 요청 오류]", error);
             redirect("/login");
       }
 
@@ -70,8 +71,8 @@ export async function login(formData: FormData) {
 // 로그아웃
 export async function logout() {
       const cookieStore = await cookies();
-
       cookieStore.delete(AUTH_COOKIE);
+      cookieStore.delete("jstory_role");
 
       redirect("/login");
 }
