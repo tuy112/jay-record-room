@@ -1,11 +1,13 @@
 import { useState } from 'react';
-import { Home } from 'lucide-react';
 import Link from 'next/link';
+
+import { logout } from '@/app/login/actions';
+
 import styles from './style.module.css';
 
 const menuItems = [
       { label: '홈 (가계부 + 운동기록방)', href: '/' },
-      { label: '일기장', href: '/diary' },
+      { label: '일기장 (하루일기 X 개발일지 X 개발지식)', href: '/diary' },
       { label: '개발일지', href: '/dev-record' },
       { label: '기록관리시스템 연구소', href: '/rms' },
       { label: '정보처리기사 요약', href: '/eip-study' },
@@ -15,9 +17,9 @@ const menuItems = [
 export default function Header() {
       const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+      // 로그아웃 기능
       const handleLogout = async () => {
-            // 로그아웃 기능
-            
+            await logout();
       };
 
       return (
