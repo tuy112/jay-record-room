@@ -6,12 +6,10 @@ import { logout } from '@/app/login/actions';
 import styles from './style.module.css';
 
 const menuItems = [
-      { label: '홈 (가계부 + 운동기록방)', href: '/' },
-      { label: '일기장 (하루일기 X 개발일지 X 개발지식)', href: '/diary' },
-      { label: '개발일지', href: '/dev-record' },
+      { label: '가계부 + 운동기록방', href: '/record-room' },
+      { label: '일기장 (하루일기 X 개발일지 X 개발지식)', href: '/diary-room' },
       { label: '기록관리시스템 연구소', href: '/rms' },
       { label: '정보처리기사 요약', href: '/eip-study' },
-      { label: '알쓸개지 (알면 쓸데있는 개발 지식)', href: '/coding-club' },
 ];
 
 export default function Header() {

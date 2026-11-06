@@ -2,27 +2,11 @@
 
 import { useState } from 'react';
 
-import {
-      EntryType,
-      CardType,
-      MONTHS,
-      TYPE_LABELS,
-      CARD_LABELS,
-      fmt,
-} from '../../../lib/data/types/account';
+import { EntryType,CardType,MONTHS,TYPE_LABELS,CARD_LABELS,fmt } from '@/lib/account/account';
+import { createEntry,updateEntry,deleteEntry,createExpense,updateExpense,deleteExpense,updateAssets,updateBudget } from '@/lib/account/account';
+import { useAccountData } from '@/lib/account/useAccountData';
 
-import { useAccountData } from './hooks/useAccountData';
-
-import {
-      createEntry,
-      updateEntry,
-      deleteEntry,
-      createExpense,
-      updateExpense,
-      deleteExpense,
-} from '@/lib/api/account';
-
-import AccountModal from '../../../components/AcountModal';
+import AccountModal from '@/components/AcountModal';
 
 import styles from './style.module.css';
 
@@ -43,11 +27,13 @@ export default function AccountSection() {
             toggleDate,
       } = useAccountData();
 
-      const [modalType, setModalType] = useState<EntryType | 'expense' | null>(null);
+      type ModalType = EntryType | 'expense' | 'asset' | 'budget';
+
+      const [modalType, setModalType] = useState<ModalType | null>(null);
       const [selectedItem, setSelectedItem] = useState<any>(null);
 
       // 모달 열기
-      const openModal = (type: EntryType | 'expense', item?: any) => {
+      const openModal = (type: ModalType, item?: any) => {
             setModalType(type);
             setSelectedItem(item ?? null);
       };
@@ -62,39 +48,69 @@ export default function AccountSection() {
       const handleSave = async (item: any) => {
             const data = {
                   ...item,
+                  monthId: current?.id,
                   year,
                   month: month + 1,
             };
 
-            if (modalType === 'expense') {
-                  if (selectedItem?.id) {
-                        await updateExpense(selectedItem.id, data);
-                  } else {
-                        await createExpense(data);
+            try {
+                  if (modalType === 'asset') {
+                        await updateAssets({
+                              year,
+                              month: month + 1,
+                              totalAsset: Number(item.amount),
+                        });
+                  } else if (modalType === 'budget') {
+                        await updateBudget({
+                              year,
+                              month: month + 1,
+                              budget: Number(item.amount),
+            });
+                  } else if (modalType === 'expense') {
+                        if (selectedItem?.id) {
+                              await updateExpense(selectedItem.id, data);
+                        } else {
+                              await createExpense(data);
+                        }
+                  } else if (modalType) {
+                        if (selectedItem?.id) {
+                              await updateEntry(selectedItem.id, data);
+                        } else {
+                              await createEntry(data);
+                        }
                   }
-            } else if (modalType) {
-                  if (selectedItem?.id) {
-                        await updateEntry(selectedItem.id, data);
-                  } else {
-                        await createEntry(data);
-                  }
-            }
+      
+                  closeModal();
+                  window.location.reload();
 
-            closeModal();
-            window.location.reload();
+            } catch (error) {
+                  console.error('가계부 저장 실패:', error);
+                  alert('저장에 실패했습니다.');
+            }
       };
 
       // 삭제
-      const handleDelete = async (type: EntryType | 'expense', id: number) => {
-            if (!confirm('정말 삭제하시겠습니까?')) return;
-
-            if (type === 'expense') {
-                  await deleteExpense(id);
-            } else {
-                  await deleteEntry(id);
+      const handleDelete = async (type: EntryType | 'expense', id?: number) => {
+            if (id == null) {
+                  alert('삭제할 데이터의 ID가 없습니다.');
+                  return;
             }
+      
+            if (!confirm('정말 삭제하시겠습니까?')) return;
+      
+            try {
+                  if (type === 'expense') {
+                        await deleteExpense(id);
+                  } else {
+                        await deleteEntry(id);
+                  }
+      
+                  window.location.reload();
 
-            window.location.reload();
+            } catch (error) {
+                  console.error('가계부 삭제 실패:', error);
+                  alert('삭제에 실패했습니다.');
+            }
       };
 
       // 로딩
@@ -112,102 +128,127 @@ export default function AccountSection() {
             );
       }
 
-      // 오류
-      if (error) {
-            return (
-                  <div className={`${styles.statusContainer} ${styles.errorContainer}`}>
-                        <div className={`${styles.statusIcon} ${styles.errorIcon}`}>
-                              !
-                        </div>
-                        <div className={styles.statusTitle}>
-                              데이터를 불러오지 못했습니다.
-                        </div>
-                        <div className={styles.statusMessage}>
-                              {error}
-                        </div>
-                  </div>
-            );
-      }
-
       return (
             <section className={styles.section}>
                   {/* 월 네비게이션 */}
                   <div className={styles.monthNav}>
-                        <button className={styles.navArrow} onClick={prevMonth}>‹</button>
+                        <button className={styles.navArrow} onClick={prevMonth}>
+                              ‹
+                        </button>
+
                         <span className={styles.monthLabel}>
                               {MONTHS[month]}
                         </span>
-                        <button className={styles.navArrow} onClick={nextMonth}>›</button>
+
+                        <button className={styles.navArrow} onClick={nextMonth}>
+                              ›
+                        </button>
                   </div>
 
                   {/* 데이터 없음 */}
                   {!current || !summary || !budget ? (
                         <div className={styles.statusContainer}>
-                              <div className={`${styles.statusIcon} ${styles.emptyIcon}`}>
-                                    📋
-                              </div>
-                              <div className={styles.statusTitle}>
-                                    이달의 데이터가 없습니다.
-                              </div>
+                              <div className={`${styles.statusIcon} ${styles.emptyIcon}`}>📋</div>
+                              <div className={styles.statusTitle}>이달의 데이터가 없습니다.</div>
                               <div className={styles.statusMessage}>
                                     가계부 내역을 등록하면 이곳에서 확인할 수 있습니다.
                               </div>
-
                               <button
                                     className={styles.addButton}
                                     onClick={() => openModal('income')}
                               >
-                                    + 수입 등록
+                                    수입 등록
                               </button>
                         </div>
                   ) : (
                         <>
-                              {/* 총재산 카드 */}
-                              <div className={styles.assetCard}>
-                                    <span className={styles.assetLabel}>총재산</span>
+                              {/* 총재산 */}
+                              <div
+                                    className={`${styles.assetCard} ${styles.clickable}`}
+                                    onClick={() => openModal('asset', {
+                                          amount: current.totalAsset,
+                                    })}
+                              >
+                                    <span className={styles.assetLabel}>
+                                          총재산
+                                    </span>
+
                                     <span className={styles.assetValue}>
                                           {fmt(current.totalAsset)}
                                     </span>
+
+                                    <span className={styles.assetHint}>
+                                          클릭하여 수정
+                                    </span>
                               </div>
 
-                              {/* 요약 카드 */}
+                              {/* 수입 / 저축 */}
                               <div className={styles.summaryRow_2}>
-                                    <div className={`${styles.summaryCard} ${styles.income}`}>
-                                          <span className={styles.summaryLabel}>수입</span>
+                                    <div
+                                          className={`${styles.summaryCard} ${styles.income} ${styles.clickable}`}
+                                          onClick={() => openModal('income')}
+                                    >
+                                          <span className={styles.summaryLabel}>
+                                                수입
+                                          </span>
+
                                           <span className={styles.summaryValue}>
                                                 +{fmt(summary.income)}
                                           </span>
                                     </div>
 
-                                    <div className={`${styles.summaryCard} ${styles.saving}`}>
-                                          <span className={styles.summaryLabel}>저축</span>
+                                    <div
+                                          className={`${styles.summaryCard} ${styles.saving} ${styles.clickable}`}
+                                          onClick={() => openModal('saving')}
+                                    >
+                                          <span className={styles.summaryLabel}>
+                                                저축
+                                          </span>
+
                                           <span className={styles.summaryValue}>
                                                 {fmt(summary.saving)}
                                           </span>
                                     </div>
                               </div>
 
+                              {/* 고정지출 / 카드지출 / 총지출 */}
                               <div className={styles.summaryRow_3}>
-                                    <div className={`${styles.summaryCard} ${styles.fixed}`}>
-                                          <span className={styles.summaryLabel}>고정지출(신용+체크)</span>
+                                    <div
+                                          className={`${styles.summaryCard} ${styles.fixed} ${styles.clickable}`}
+                                          onClick={() => openModal('fixed')}
+                                    >
+                                          <span className={styles.summaryLabel}>
+                                                고정지출(신용+체크)
+                                          </span>
+
                                           <span className={styles.summaryValue}>
                                                 -{fmt(summary.fixed)}
                                           </span>
                                     </div>
 
                                     <div className={`${styles.summaryCard} ${styles.check}`}>
-                                          <span className={styles.summaryLabel}>신용카드 지출</span>
+                                          <span className={styles.summaryLabel}>
+                                                신용카드 지출
+                                          </span>
+
                                           <span className={styles.summaryValue}>
                                                 -{fmt(summary.creditExpense)}
                                           </span>
-                                          <span className={styles.summaryLabel}>계좌이체+체크카드 지출</span>
+
+                                          <span className={styles.summaryLabel}>
+                                                계좌이체+체크카드 지출
+                                          </span>
+
                                           <span className={styles.summaryValue}>
                                                 -{fmt(summary.cashExpense)}
                                           </span>
                                     </div>
 
                                     <div className={`${styles.summaryCard} ${styles.credit}`}>
-                                          <span className={styles.summaryLabel}>총 지출</span>
+                                          <span className={styles.summaryLabel}>
+                                                총 지출
+                                          </span>
+
                                           <span className={styles.summaryValue}>
                                                 -{fmt(summary.totalExpense)}
                                           </span>
@@ -219,18 +260,25 @@ export default function AccountSection() {
                                     <span className={styles.netBalanceLabel}>
                                           이번 달 순잔액 [수입 - (저축 + 총지출)]
                                     </span>
+
                                     <span className={`${styles.netBalanceValue} ${summary.netBalance >= 0 ? styles.plus : styles.minus}`}>
                                           {summary.netBalance >= 0 ? '+' : ''}
                                           {fmt(summary.netBalance)}
                                     </span>
                               </div>
 
-                              {/* 지출 목표 */}
-                              <div className={styles.budgetCard}>
+                              {/* 목표 지출 */}
+                              <div
+                                    className={`${styles.budgetCard} ${styles.clickable}`}
+                                    onClick={() => openModal('budget', {
+                                          amount: budget.goal,
+                                    })}
+                              >
                                     <div className={styles.budgetHeader}>
                                           <span className={styles.budgetTitle}>
                                                 목표 지출 액수 ({month + 1}월)
                                           </span>
+
                                           <span className={styles.budgetGoal}>
                                                 {fmt(budget.goal)}
                                           </span>
@@ -241,20 +289,28 @@ export default function AccountSection() {
                                                 className={styles.progressBarFill}
                                                 style={{
                                                       width: `${budget.progressPct}%`,
-                                                      backgroundColor: budget.remaining < 0 ? '#e74c3c' : '#4a90e2',
+                                                      backgroundColor: budget.remaining < 0
+                                                            ? '#e74c3c'
+                                                            : '#4a90e2',
                                                 }}
                                           />
                                     </div>
 
                                     <div className={styles.budgetRow}>
-                                          <span className={styles.budgetLabel}>현재 지출 중</span>
+                                          <span className={styles.budgetLabel}>
+                                                현재 지출 중
+                                          </span>
+
                                           <span className={styles.budgetValue}>
                                                 -{fmt(budget.spent)}
                                           </span>
                                     </div>
 
                                     <div className={styles.budgetRow}>
-                                          <span className={styles.budgetLabel}>지출 남은 금액</span>
+                                          <span className={styles.budgetLabel}>
+                                                지출 남은 금액
+                                          </span>
+
                                           <span className={`${styles.budgetValue} ${budget.remaining >= 0 ? styles.plus : styles.minus}`}>
                                                 {budget.remaining >= 0 ? '+' : ''}
                                                 {fmt(budget.remaining)}
@@ -266,6 +322,7 @@ export default function AccountSection() {
                                                 <span className={styles.budgetLabel}>
                                                       지출 리셋까지 남은 날
                                                 </span>
+
                                                 <span className={styles.ddayValue}>
                                                       D-{budget.daysLeft}
                                                 </span>
@@ -273,23 +330,19 @@ export default function AccountSection() {
                                     )}
                               </div>
 
-                              {/* 수입 / 고정지출 / 저축 */}
+                              {/* 수입 / 고정지출 / 저축 목록 */}
                               {(['income', 'fixed', 'saving'] as EntryType[]).map(type => {
-                                    const items = current.entries.filter(item => item.type === type);
+                                    const items = current.entries.filter(
+                                          item => item.type === type
+                                    );
 
                                     return (
                                           <div key={type} className={styles.entryGroup}>
-                                                <div className={styles.groupHeaderRow}>
-                                                      <span className={`${styles.groupHeader} ${styles[`header_${type}`]}`}>
-                                                            {TYPE_LABELS[type]}
-                                                      </span>
-
-                                                      <button
-                                                            className={styles.addButton}
-                                                            onClick={() => openModal(type)}
-                                                      >
-                                                            + 추가
-                                                      </button>
+                                                <div
+                                                      className={`${styles.groupHeader} ${styles[`header_${type}`]} ${styles.clickable}`}
+                                                      onClick={() => openModal(type)}
+                                                >
+                                                      {TYPE_LABELS[type]}
                                                 </div>
 
                                                 {items.map(item => (
@@ -322,19 +375,13 @@ export default function AccountSection() {
                                     );
                               })}
 
-                              {/* 일별 지출 */}
+                              {/* 일일 지출 */}
                               <div className={styles.entryGroup}>
-                                    <div className={styles.groupHeaderRow}>
-                                          <span className={`${styles.groupHeader} ${styles.header_expense}`}>
-                                                지출
-                                          </span>
-
-                                          <button
-                                                className={styles.addButton}
-                                                onClick={() => openModal('expense')}
-                                          >
-                                                + 추가
-                                          </button>
+                                    <div
+                                          className={`${styles.groupHeader} ${styles.header_expense} ${styles.clickable}`}
+                                          onClick={() => openModal('expense')}
+                                    >
+                                          일일 지출
                                     </div>
 
                                     {sortedDates.map(date => {
@@ -345,19 +392,19 @@ export default function AccountSection() {
                                                       <div
                                                             className={styles.dateRow}
                                                             onClick={() => toggleDate(date)}
-                                                            style={{
-                                                                  cursor: 'pointer',
-                                                                  userSelect: 'none',
-                                                            }}
                                                       >
                                                             {date.slice(5).replace('-', '/')}
+
                                                             <span className={styles.dateArrow}>
                                                                   {isCollapsed ? '▶' : '▼'}
                                                             </span>
                                                       </div>
 
-                                                      {!isCollapsed && groupedDaily[date].map((item, index) => (
-                                                            <div key={item.id ?? index} className={styles.entryRow}>
+                                                      {!isCollapsed && groupedDaily[date].map(item => (
+                                                            <div
+                                                                  key={`${date}-${item.label}-${item.amount}`}
+                                                                  className={styles.entryRow}
+                                                            >
                                                                   <span className={styles.entryLabel}>
                                                                         {item.label}
                                                                   </span>

@@ -1,14 +1,14 @@
+// 가계부 상태 관리
 import { useState, useMemo, useEffect } from 'react';
 
-import { getMonthly } from '@/lib/api/account';
-import { MonthData } from '@/lib/data/types/account';
-
 import {
+      getMonthly,
+      MonthData,
       sumByType,
       sumByTypeAndCard,
       sumByCard,
       groupExpensesByDate,
-} from '../utils';
+} from '@/lib/account/account';
 
 export function useAccountData() {
       const now = new Date();
@@ -22,7 +22,7 @@ export function useAccountData() {
       const [loading, setLoading] = useState(false);
       const [error, setError] = useState<string | null>(null);
 
-      // 1. 월별 가계부 API 조회
+      // 1. 월별 가계부 조회
       useEffect(() => {
             let cancelled = false;
 
@@ -36,21 +36,7 @@ export function useAccountData() {
 
                         if (cancelled) return;
 
-                        const result = data as MonthData & {
-                              dailyExpenses: {
-                                    expenseDate: string;
-                                    excludeBudget: boolean;
-                              }[];
-                        };
-
-                        setCurrent({
-                              ...result,
-                              dailyExpenses: result.dailyExpenses.map((expense) => ({
-                                    ...expense,
-                                    date: expense.expenseDate,
-                                    excludeFromBudget: expense.excludeBudget,
-                              })),
-                        });
+                        setCurrent(data);
                   } catch (error) {
                         if (cancelled) return;
 
@@ -121,8 +107,6 @@ export function useAccountData() {
             const cashExpense = fixedCash + dailyCash;
             const totalExpense = creditExpense + cashExpense;
 
-            const netBalance = income - saving - totalExpense;
-
             return {
                   income,
                   fixed,
@@ -130,7 +114,7 @@ export function useAccountData() {
                   creditExpense,
                   cashExpense,
                   totalExpense,
-                  netBalance,
+                  netBalance: income - saving - totalExpense,
             };
       }, [current]);
 
@@ -143,9 +127,12 @@ export function useAccountData() {
 
             const spent = current.dailyExpenses
                   .filter((expense) => {
-                        if (expense.excludeFromBudget) return false;
+                        if (expense.excludeBudget) return false;
 
-                        return !startDate || expense.date >= startDate;
+                        return (
+                              !startDate ||
+                              expense.expenseDate >= startDate
+                        );
                   })
                   .reduce((sum, expense) => sum + expense.amount, 0);
 
@@ -190,7 +177,6 @@ export function useAccountData() {
             new Set()
       );
 
-      // 월 변경 시 날짜 접기
       useEffect(() => {
             setCollapsedDates(new Set(sortedDates));
       }, [key, sortedDates]);

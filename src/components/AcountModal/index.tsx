@@ -3,11 +3,9 @@
 import { useState } from 'react';
 import styles from './style.module.css';
 
-import {
-      EntryType,
-      CardType,
-      fmt,
-} from '@/lib/data/types/account';
+import { EntryType, CardType, formatAmount, parseAmount } from '@/lib/account/account';
+
+type ModalType = EntryType | 'expense' | 'asset' | 'budget';
 
 type AccountItem = {
       id?: number;
@@ -20,16 +18,18 @@ type AccountItem = {
 
 type Props = {
       item?: AccountItem | null;
-      type: EntryType | 'expense';
+      type: ModalType;
       onClose: () => void;
       onSave: (item: AccountItem) => Promise<void>;
 };
 
-const TYPE_LABELS: Record<EntryType | 'expense', string> = {
+const TYPE_LABELS: Record<ModalType, string> = {
       income: '수입',
       fixed: '고정지출',
       saving: '저축',
       expense: '지출',
+      asset: '총 자산',
+      budget: '예산 목표',
 };
 
 export default function AccountModal({
@@ -40,13 +40,24 @@ export default function AccountModal({
 }: Props) {
       const [label, setLabel] = useState(item?.label ?? '');
       const [amount, setAmount] = useState(String(item?.amount ?? ''));
-      const [date, setDate] = useState(item?.date ?? new Date().toISOString().slice(0, 10));
-      const [cardType, setCardType] = useState<CardType>(item?.cardType ?? 'credit');
+      const [date, setDate] = useState(
+            item?.date ?? new Date().toISOString().slice(0, 10)
+      );
+      const [cardType, setCardType] = useState<CardType>(
+            item?.cardType ?? 'credit'
+      );
       const [saving, setSaving] = useState(false);
 
       const handleSubmit = async () => {
-            if (!label.trim() || !amount || Number(amount) <= 0) {
-                  alert('항목명과 금액을 입력해 주세요.');
+            const isAsset = type === 'asset';
+
+            if (!amount || Number(amount) <= 0) {
+                  alert('금액을 입력해 주세요.');
+                  return;
+            }
+
+            if (!isAsset && !label.trim()) {
+                  alert('항목명을 입력해 주세요.');
                   return;
             }
 
@@ -55,15 +66,20 @@ export default function AccountModal({
             try {
                   await onSave({
                         ...item,
-                        type: type === 'expense' ? undefined : type,
+                        type:
+                              type === 'expense' ||
+                              type === 'asset' ||
+                              type === 'budget'
+                                    ? undefined
+                                    : type,
                         date,
-                        label: label.trim(),
+                        label: isAsset ? '전재산' : label.trim(),
                         amount: Number(amount),
                         cardType,
                   });
-
+      
                   onClose();
-            } catch (error) {
+            } catch {
                   alert('저장에 실패했습니다.');
             } finally {
                   setSaving(false);
@@ -72,29 +88,44 @@ export default function AccountModal({
 
       return (
             <div className={styles.overlay} onClick={onClose}>
-                  <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+                  <div
+                        className={styles.modal}
+                        onClick={(e) => e.stopPropagation()}
+                  >
                         <div className={styles.header}>
-                              <h3>{item ? '항목 수정' : `${TYPE_LABELS[type]} 등록`}</h3>
+                              <h3>
+                                    {item
+                                          ? '항목 수정'
+                                          : `${TYPE_LABELS[type]} 등록`}
+                              </h3>
                               <button onClick={onClose}>×</button>
                         </div>
 
                         <div className={styles.form}>
-                              <label>항목명</label>
-                              <input
-                                    value={label}
-                                    onChange={(e) => setLabel(e.target.value)}
-                                    placeholder="항목명을 입력해 주세요."
-                              />
+                              {type !== 'asset' && type !== 'budget' && (
+                                    <>
+                                          <label>항목명</label>
+                                          <input
+                                                value={label}
+                                                onChange={(e) => setLabel(e.target.value)}
+                                                placeholder="항목명을 입력해 주세요."
+                                          />
+                                    </>
+                              )}
 
                               <label>금액</label>
                               <input
-                                    type="number"
-                                    value={amount}
-                                    onChange={(e) => setAmount(e.target.value)}
+                                    type="text"
+                                    inputMode="numeric"
+                                    value={formatAmount(amount)}
+                                    onChange={(e) => {
+                                          const value = e.target.value.replace(/[^0-9]/g, '');
+                                          setAmount(value);
+                                    }}
                                     placeholder="금액을 입력해 주세요."
                               />
 
-                              {type === 'expense' && (
+                              {(type === 'expense' || type === 'budget') && (
                                     <>
                                           <label>날짜</label>
                                           <input
@@ -102,7 +133,11 @@ export default function AccountModal({
                                                 value={date}
                                                 onChange={(e) => setDate(e.target.value)}
                                           />
+                                    </>
+                              )}
 
+                              {(type === 'expense' || type === 'fixed') && (
+                                    <>
                                           <label>결제수단</label>
                                           <select
                                                 value={cardType}
@@ -116,9 +151,13 @@ export default function AccountModal({
                         </div>
 
                         <div className={styles.actions}>
-                              <button className={styles.cancel} onClick={onClose}>
+                              <button
+                                    className={styles.cancel}
+                                    onClick={onClose}
+                              >
                                     취소
                               </button>
+
                               <button
                                     className={styles.save}
                                     onClick={handleSubmit}
