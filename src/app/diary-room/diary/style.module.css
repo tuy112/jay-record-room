@@ -1,47 +1,18 @@
-/* 페이지 레이아웃 */
-.diaryPage {
-      width: 100%;
-      min-height: 100vh;
-      background: #f8fafc;
-      padding: 70px 18px 80px;
-}
-
-.diaryPageInner {
-      width: 100%;
-      max-width: 1280px;
-      margin: 0 auto;
-}
-
-.diaryPageHeader {
-      margin-bottom: 20px;
-      text-align: center;
-}
-
-.diaryPageHeader h1 {
-      font-size: 28px;
-      font-weight: 700;
-      color: #0f172a;
-}
-
-.diaryPageHeader p {
-      font-size: 14px;
-      color: #64748b;
-}
-
+/* 일기장 레이아웃 */
 .diaryPageContent {
       display: flex;
       flex-direction: column;
+      gap: 24px;
 }
 
-/* 일기 파트 */
+/* 일기 작성 영역 */
 .writeBox {
       display: flex;
       flex-direction: column;
       gap: 12px;
+      padding: 24px;
       background: #ffffff;
       border-radius: 12px;
-      padding: 24px;
-      margin-bottom: 24px;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
@@ -51,6 +22,7 @@
       color: #0f172a;
 }
 
+/* 감정 선택 */
 .emotionSelect {
       display: flex;
       flex-wrap: wrap;
@@ -70,12 +42,24 @@
       transition: all 0.15s ease;
 }
 
+.emotionBtn:hover {
+      opacity: 0.8;
+}
+
+/* 입력 영역 */
 .titleInput {
       width: 100%;
       padding: 10px 12px;
       border: 1px solid #e2e8f0;
       border-radius: 8px;
       font-size: 14px;
+      outline: none;
+}
+
+.titleInput:focus,
+.contentInput:focus,
+.musicInput:focus {
+      border-color: #94a3b8;
 }
 
 .contentInput {
@@ -85,8 +69,11 @@
       border-radius: 8px;
       font-size: 14px;
       resize: vertical;
+      line-height: 1.6;
+      outline: none;
 }
 
+/* 음악 입력 */
 .musicInputRow {
       display: flex;
       flex-wrap: wrap;
@@ -100,7 +87,10 @@
       border: 1px solid #e2e8f0;
       border-radius: 8px;
       font-size: 13px;
+      outline: none;
 }
+
+/* 저장 버튼 */
 .saveBtn {
       align-self: flex-end;
       padding: 10px 20px;
@@ -111,8 +101,14 @@
       font-size: 14px;
       font-weight: 600;
       cursor: pointer;
+      transition: background 0.15s ease;
 }
 
+.saveBtn:hover {
+      background: #334155;
+}
+
+/* 일기 목록 */
 .entryList {
       display: flex;
       flex-direction: column;
@@ -120,16 +116,18 @@
 }
 
 .entryCard {
+      padding: 20px;
       background: #ffffff;
       border-radius: 12px;
-      padding: 20px;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
+/* 일기 카드 상단 */
 .entryCardHeader {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 12px;
       margin-bottom: 8px;
 }
 
@@ -144,22 +142,27 @@
 .entryDate {
       font-size: 12px;
       color: #94a3b8;
+      white-space: nowrap;
 }
 
+/* 일기 내용 */
 .entryTitle {
+      margin-bottom: 6px;
       font-size: 16px;
       font-weight: 700;
       color: #0f172a;
-      margin-bottom: 6px;
 }
 
 .entryContent {
+      margin-bottom: 14px;
       font-size: 14px;
       color: #475569;
-      line-height: 1.6;
-      margin-bottom: 14px;
+      line-height: 1.7;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
 }
 
+/* 음악 카드 */
 .musicCard {
       display: flex;
       align-items: center;
@@ -177,6 +180,7 @@
       flex: 1;
       display: flex;
       flex-direction: column;
+      min-width: 0;
 }
 
 .musicName {
@@ -195,4 +199,60 @@
       font-weight: 600;
       color: #2563eb;
       text-decoration: none;
+      white-space: nowrap;
+}
+
+.musicLink:hover {
+      text-decoration: underline;
+}
+
+/* 데이터 없음 */
+.emptyMessage {
+      padding: 40px 20px;
+      background: #ffffff;
+      border-radius: 12px;
+      text-align: center;
+      font-size: 14px;
+      color: #94a3b8;
+}
+
+/* 모바일 */
+@media (max-width: 640px) {
+      .writeBox {
+            padding: 18px;
+      }
+
+      .entryCard {
+            padding: 16px;
+      }
+
+      .emotionSelect {
+            gap: 6px;
+      }
+
+      .emotionBtn {
+            padding: 6px 10px;
+            font-size: 12px;
+      }
+
+      .musicInputRow {
+            flex-direction: column;
+      }
+
+      .musicInput {
+            width: 100%;
+            flex: auto;
+      }
+
+      .saveBtn {
+            width: 100%;
+      }
+
+      .entryCardHeader {
+            align-items: flex-start;
+      }
+
+      .musicCard {
+            padding: 10px;
+      }
 }

@@ -1,0 +1,78 @@
+.diaryPage {
+      width: 100%;
+      min-height: 100vh;
+      background: #f8fafc;
+      padding: 70px 18px 80px;
+}
+
+.diaryPageInner {
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+}
+
+.diaryPageHeader {
+      margin-bottom: 24px;
+      text-align: center;
+}
+
+.diaryPageHeader h1 {
+      font-size: 28px;
+      font-weight: 700;
+      color: #0f172a;
+}
+
+.diaryPageHeader p {
+      font-size: 14px;
+      color: #64748b;
+}
+
+/* 상단 탭 */
+.tabMenu {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 24px;
+      padding: 6px;
+      background: #e9edf3;
+      border-radius: 12px;
+}
+
+.tabBtn {
+      flex: 1;
+      max-width: 220px;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      background: transparent;
+      color: #64748b;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+}
+
+.tabBtn:hover {
+      color: #0f172a;
+}
+
+.activeTab {
+      background: #ffffff;
+      color: #0f172a;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+@media (max-width: 640px) {
+      .diaryPage {
+            padding: 70px 14px 60px;
+      }
+
+      .diaryPageHeader h1 {
+            font-size: 24px;
+      }
+
+      .tabBtn {
+            padding: 11px 12px;
+            font-size: 13px;
+      }
+}
