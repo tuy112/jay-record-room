@@ -3,11 +3,6 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
-// 임시 고정 계정 (삭제 처리 예정)
-// const ID = "admin";
-// const PW = "admin1473";
-// const AUTH_COOKIE = "jstory_auth";
-// const AUTH_VALUE = "ok";
 const AUTH_COOKIE = "jstory_auth";
 const BACKEND_URL = "http://localhost:8087";
 
