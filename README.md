@@ -2,3 +2,38 @@
 
 
 - 대시보드 todo : D-day 넣기 (시험까지 남은 일 + 시험 준비 관련 + 다이어트 목표일)
+
+---
+#### 가계부
+
+```
+app/
+└── record-room/
+      └── account/ 
+            
+lib/
+└── account/
+      ├── account.ts        // API + 타입 + 상수 + 계산 유틸
+      └── useAccountData.ts // 가계부 상태 관리
+```
+
+---
+
+#### 일기장
+
+```
+src/
+├── app/
+│   └── diary/
+│       ├── page.tsx
+│       ├── page.module.css
+│       └── components/
+│           ├── DiarySection.tsx
+│           ├── DevRecordSection.tsx
+│           └── DevRecordModal.tsx
+│
+└── lib/
+    └── data/
+        ├── diary/
+        └── devRecord/
+```
