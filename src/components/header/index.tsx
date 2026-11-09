@@ -7,9 +7,9 @@ import styles from './style.module.css';
 
 const menuItems = [
       { label: '가계부 + 운동기록방', href: '/record-room' },
-      { label: '일기장 (하루일기 X 개발일지 X 개발지식)', href: '/diary-room' },
+      { label: '일기장', href: '/diary' },
+      { label: '일일 개발일지 (개발일지+정보처리기사 공부방)', href: '/dev-record' },
       { label: '기록관리시스템 연구소', href: '/rms' },
-      { label: '정보처리기사 요약', href: '/eip-study' },
 ];
 
 export default function Header() {
