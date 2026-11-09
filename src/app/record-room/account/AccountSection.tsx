@@ -6,7 +6,7 @@ import { EntryType,CardType,MONTHS,TYPE_LABELS,CARD_LABELS,fmt } from '@/lib/acc
 import { createEntry,updateEntry,deleteEntry,createExpense,updateExpense,deleteExpense,updateAssets,updateBudget } from '@/lib/account/account';
 import { useAccountData } from '@/lib/account/useAccountData';
 
-import AccountModal from '@/components/AcountModal';
+import AccountModal from '@/components/acountModal';
 
 import styles from './style.module.css';
 
