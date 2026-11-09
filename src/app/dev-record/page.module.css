@@ -1,9 +1,10 @@
-/* 페이지 레이아웃 */
+
+/* 페이지 */
 .devPage {
       width: 100%;
       min-height: 100vh;
       background: #f8fafc;
-      padding: 70px 18px 80px;
+      padding: 90px 24px 80px;
 }
 
 .devPageInner {
@@ -13,7 +14,7 @@
 }
 
 .devPageHeader {
-      margin-bottom: 20px;
+      margin-bottom: 24px;
       text-align: center;
 }
 
@@ -31,21 +32,81 @@
 .devPageContent {
       display: flex;
       flex-direction: column;
+      gap: 20px;
 }
 
+/* 상단 탭 */
+.tabMenu {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid #e2e8f0;
+}
 
-/* 개발일지 테이블 */
+.tabBtn {
+      padding: 12px 24px;
+      border: none;
+      border-bottom: 3px solid transparent;
+      background: transparent;
+      color: #64748b;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+}
+
+.tabBtn:hover {
+      color: #0f172a;
+}
+
+.activeTab {
+      color: #0f172a;
+      border-bottom-color: #0f172a;
+}
+
+/* 정보처리기사 과목 탭 */
+.subjectTabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+}
+
+.subjectTab {
+      padding: 8px 18px;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      background: #fff;
+      color: #64748b;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+}
+
+.subjectTab:hover {
+      border-color: #0f172a;
+      color: #0f172a;
+}
+
+.subjectTabActive {
+      background: #0f172a;
+      border-color: #0f172a;
+      color: #fff;
+}
+
+/* 개발일지 / 코딩클럽 테이블 */
 .devTable {
       width: 100%;
       border-collapse: collapse;
-      background-color: #fff;
+      background: #fff;
       border-radius: 12px;
       overflow: hidden;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
 }
 
 .devTable thead {
-      background-color: #191919;
+      background: #191919;
 }
 
 .devTable th {
@@ -70,11 +131,15 @@
 }
 
 .devTable tbody tr:hover {
-      background-color: #fafafa;
+      background: #fafafa;
 }
 
 .devTable tbody tr:last-child td {
       border-bottom: none;
+}
+
+.clickableRow {
+      cursor: pointer;
 }
 
 .dateCell {
@@ -87,7 +152,7 @@
       display: inline-block;
       padding: 4px 10px;
       border-radius: 6px;
-      background-color: #191919;
+      background: #191919;
       color: #fff;
       font-size: 12px;
       font-weight: 500;
@@ -106,6 +171,12 @@
       min-width: 160px;
 }
 
+.subtitle {
+      margin-top: 4px;
+      font-size: 12px;
+      color: #999;
+}
+
 .contentCell {
       color: #666;
       line-height: 1.5;
@@ -122,55 +193,117 @@
       display: inline-block;
       padding: 3px 10px;
       border-radius: 12px;
-      background-color: #eef2ff;
+      background: #eef2ff;
       color: #4f46e5;
       font-size: 12px;
       font-weight: 500;
       white-space: nowrap;
 }
 
-.pagination {
+/* 모달 */
+.modalContent {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 16px;
+      flex-direction: column;
+      height: 100%;
+}
+
+.modalTitle {
+      margin-top: 8px;
+      margin-bottom: 4px;
+      font-size: 18px;
+      font-weight: 600;
+      color: #0f172a;
+}
+
+.modalSubtitle {
+      margin-bottom: 4px;
+      font-size: 13px;
+      color: #666;
+}
+
+.modalDate {
+      margin-bottom: 20px;
+      font-size: 12px;
+      color: #999;
+}
+
+.modalBody {
+      flex: 1;
+      overflow-y: auto;
+      line-height: 1.7;
+      font-size: 14px;
+      color: #333;
+      white-space: pre-wrap;
+      text-align: left;
+}
+
+.memorySection,
+.quizSection {
       margin-top: 24px;
 }
 
-.pageBtn {
-      padding: 8px 18px;
-      border: 1px solid #e0e0e0;
+.sectionLabel {
+      margin-bottom: 10px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #0f172a;
+}
+
+.memoryBox {
+      padding: 16px;
+      background: #f8fafc;
       border-radius: 8px;
-      background-color: #fff;
-      color: #333;
+}
+
+.modalFooter {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 20px;
+}
+
+.editButton {
+      padding: 8px 18px;
+      border: none;
+      border-radius: 8px;
+      background: #0f172a;
+      color: #fff;
       font-size: 13px;
       cursor: pointer;
-      transition: all 0.15s ease;
 }
 
-.pageBtn:hover:not(:disabled) {
-      background-color: #191919;
-      color: #fff;
-      border-color: #191919;
+.editButton:hover {
+      background: #334155;
 }
 
-.pageBtn:disabled {
-      opacity: 0.4;
-      cursor: not-allowed;
-}
-
-.pageIndicator {
-      font-size: 13px;
-      color: #888;
-      min-width: 48px;
-      text-align: center;
-}
-
-/* ===== Mobile ===== */
+/* 모바일 */
 @media (max-width: 640px) {
+      .devPage {
+            padding: 90px 16px 60px;
+      }
+
+      .tabMenu {
+            gap: 0;
+      }
+
+      .tabBtn {
+            flex: 1;
+            padding: 12px 8px;
+            font-size: 13px;
+      }
+
+      .subjectTabs {
+            gap: 6px;
+      }
+
+      .subjectTab {
+            flex: 1;
+            padding: 9px 8px;
+            font-size: 12px;
+      }
+
       .devTable {
             box-shadow: none;
-            background-color: transparent;
+            background: transparent;
             border-radius: 0;
       }
 
@@ -187,10 +320,10 @@
       .devTable tr {
             display: flex;
             flex-direction: column;
-            background-color: #fff;
+            padding: 16px;
+            background: #fff;
             border-radius: 12px;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
-            padding: 16px;
       }
 
       .devTable td {
@@ -219,15 +352,5 @@
       .contentCell {
             max-width: none;
             min-width: 0;
-      }
-
-      .pagination {
-            gap: 10px;
-            margin-top: 20px;
-      }
-
-      .pageBtn {
-            padding: 8px 14px;
-            font-size: 12px;
       }
 }
