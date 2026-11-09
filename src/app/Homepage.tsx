@@ -17,7 +17,7 @@ const rooms = [
       {
             number: '01',
             title: '가계부',
-            description: '수입과 지출을 정리하고 소비 흐름을 확인해 보세요.',
+            description: '1억을 모아보자.',
             href: '/record-room?tab=account',
             category: 'MONEY',
             symbol: '₩',
@@ -26,7 +26,7 @@ const rooms = [
       {
             number: '02',
             title: '운동기록',
-            description: '오늘의 움직임을 남기고 꾸준한 변화를 만들어 보세요.',
+            description: '오늘의 헬스 + 운동 기록',
             href: '/record-room?tab=exercise',
             category: 'HEALTH',
             symbol: '↗',
@@ -35,7 +35,7 @@ const rooms = [
       {
             number: '03',
             title: '일기장',
-            description: '잊고 싶지 않은 하루와 나만의 생각을 남겨 보세요.',
+            description: '나의 하루 기록방',
             href: '/diary',
             category: 'DAILY',
             symbol: '✎',
@@ -44,7 +44,7 @@ const rooms = [
       {
             number: '04',
             title: '정보처리기사 요약',
-            description: '과목별 핵심 개념과 공부한 내용을 차곡차곡 정리하세요.',
+            description: '27년에는 정처기 꼭 따자!',
             href: '/eip-study',
             category: 'STUDY',
             symbol: 'Aa',
@@ -53,7 +53,7 @@ const rooms = [
       {
             number: '05',
             title: 'RMS 기록방',
-            description: '기록관리시스템 로그분석 및 소프트케이 연구소입니다.',
+            description: '기록관리시스템 로그분석 + 새로운 기능 연구하는 공간',
             href: '/rms',
             category: 'WORK',
             symbol: '≡',
