@@ -44,6 +44,17 @@ export interface EmotionInfo {
       color: string;
 }
 
+export const emotionList: EmotionInfo[] = [
+      { key: 'happy', label: '행복', emoji: '😊', color: '#fbbf24' },
+      { key: 'sad', label: '슬픔', emoji: '😢', color: '#60a5fa' },
+      { key: 'angry', label: '화남', emoji: '😠', color: '#f87171' },
+      { key: 'calm', label: '평온', emoji: '😌', color: '#34d399' },
+      { key: 'excited', label: '설렘', emoji: '🤩', color: '#f472b6' },
+      { key: 'anxious', label: '불안', emoji: '😰', color: '#a78bfa' },
+      { key: 'tired', label: '피곤', emoji: '😴', color: '#94a3b8' },
+      { key: 'grateful', label: '감사', emoji: '🙏', color: '#fb923c' },
+];
+
 // 일기 목록 조회
 export async function getDiaryList(): Promise<Diary[]> {
       const response = await fetch(API_URL, {
