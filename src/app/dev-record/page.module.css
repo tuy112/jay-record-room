@@ -3,8 +3,8 @@
 .devPage {
       width: 100%;
       min-height: 100vh;
-      background: #f8fafc;
       padding: 90px 24px 80px;
+      background: #f8fafc;
 }
 
 .devPageInner {
@@ -61,8 +61,8 @@
 }
 
 .activeTab {
-      color: #0f172a;
       border-bottom-color: #0f172a;
+      color: #0f172a;
 }
 
 /* 정보처리기사 과목 탭 */
@@ -90,18 +90,41 @@
 }
 
 .subjectTabActive {
-      background: #0f172a;
       border-color: #0f172a;
+      background: #0f172a;
       color: #fff;
 }
 
-/* 개발일지 / 코딩클럽 테이블 */
+/* 개발일지 등록 영역 */
+.devAction {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 16px;
+}
+
+.createButton {
+      padding: 10px 18px;
+      border: none;
+      border-radius: 8px;
+      background: #0f172a;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s ease;
+}
+
+.createButton:hover {
+      background: #334155;
+}
+
+/* 개발일지 테이블 */
 .devTable {
       width: 100%;
       border-collapse: collapse;
-      background: #fff;
-      border-radius: 12px;
       overflow: hidden;
+      border-radius: 12px;
+      background: #fff;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
 }
 
@@ -111,23 +134,25 @@
 
 .devTable th {
       padding: 16px 20px;
-      text-align: left;
+      color: #fff;
       font-size: 13px;
       font-weight: 600;
-      color: #fff;
       letter-spacing: 0.02em;
+      text-align: left;
+      white-space: nowrap;
 }
 
 .devTable td {
-      padding: 20px;
-      vertical-align: top;
+      padding: 18px 20px;
       border-bottom: 1px solid #f0f0f0;
-      font-size: 14px;
       color: #333;
+      font-size: 14px;
+      line-height: 1.5;
+      vertical-align: middle;
 }
 
 .devTable tbody tr {
-      transition: background-color 0.15s ease;
+      transition: background 0.15s ease;
 }
 
 .devTable tbody tr:hover {
@@ -143,9 +168,9 @@
 }
 
 .dateCell {
-      white-space: nowrap;
       color: #888;
       font-size: 13px;
+      white-space: nowrap;
 }
 
 .categoryBadge {
@@ -156,31 +181,32 @@
       color: #fff;
       font-size: 12px;
       font-weight: 500;
+      white-space: nowrap;
 }
 
 .pageCell {
-      font-size: 13px;
       color: #4f46e5;
+      font-size: 13px;
       font-weight: 600;
       white-space: nowrap;
 }
 
 .titleCell {
-      font-weight: 600;
-      color: #1a1a1a;
       min-width: 160px;
+      color: #1a1a1a;
+      font-weight: 600;
 }
 
 .subtitle {
       margin-top: 4px;
-      font-size: 12px;
       color: #999;
+      font-size: 12px;
 }
 
 .contentCell {
+      max-width: 320px;
       color: #666;
       line-height: 1.5;
-      max-width: 320px;
 }
 
 .tagWrap {
@@ -200,7 +226,40 @@
       white-space: nowrap;
 }
 
-/* 모달 */
+/* 테이블 관리 버튼 */
+.tableButtons {
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+}
+
+.tableButtons button {
+      padding: 6px 11px;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      background: #fff;
+      color: #475569;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+}
+
+.tableButtons button:hover {
+      border-color: #0f172a;
+      color: #0f172a;
+}
+
+.tableButtons button:last-child {
+      color: #dc2626;
+}
+
+.tableButtons button:last-child:hover {
+      border-color: #fecaca;
+      background: #fef2f2;
+}
+
+/* 공통 모달 */
 .modalContent {
       display: flex;
       flex-direction: column;
@@ -208,33 +267,36 @@
 }
 
 .modalTitle {
-      margin-top: 8px;
-      margin-bottom: 4px;
-      font-size: 18px;
-      font-weight: 600;
+      margin: 8px 0 16px;
       color: #0f172a;
+      font-size: 20px;
+      font-weight: 700;
 }
 
 .modalSubtitle {
       margin-bottom: 4px;
-      font-size: 13px;
       color: #666;
+      font-size: 13px;
 }
 
 .modalDate {
       margin-bottom: 20px;
-      font-size: 12px;
       color: #999;
+      font-size: 12px;
 }
 
 .modalBody {
       flex: 1;
       overflow-y: auto;
-      line-height: 1.7;
-      font-size: 14px;
       color: #333;
-      white-space: pre-wrap;
+      font-size: 14px;
+      line-height: 1.7;
       text-align: left;
+      white-space: pre-wrap;
+}
+
+.modalContent .tagWrap {
+      margin-top: 20px;
 }
 
 .memorySection,
@@ -244,41 +306,123 @@
 
 .sectionLabel {
       margin-bottom: 10px;
+      color: #0f172a;
       font-size: 14px;
       font-weight: 700;
-      color: #0f172a;
 }
 
 .memoryBox {
       padding: 16px;
-      background: #f8fafc;
       border-radius: 8px;
+      background: #f8fafc;
 }
 
+/* 상세 모달 하단 버튼 */
 .modalFooter {
       display: flex;
       justify-content: flex-end;
-      margin-top: 20px;
+      gap: 8px;
+      margin-top: 24px;
+}
+
+.editButton,
+.deleteButton {
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.2s ease;
 }
 
 .editButton {
-      padding: 8px 18px;
       border: none;
-      border-radius: 8px;
       background: #0f172a;
       color: #fff;
-      font-size: 13px;
-      cursor: pointer;
 }
 
 .editButton:hover {
       background: #334155;
 }
 
+.deleteButton {
+      border: 1px solid #fecaca;
+      background: #fff;
+      color: #dc2626;
+}
+
+.deleteButton:hover {
+      background: #fef2f2;
+}
+
+/* 등록 및 수정 폼 */
+.formGroup {
+      margin-bottom: 16px;
+}
+
+.formLabel {
+      display: block;
+      margin-bottom: 7px;
+      color: #334155;
+      font-size: 13px;
+      font-weight: 600;
+}
+
+.formInput,
+.formTextarea {
+      width: 100%;
+      padding: 11px 12px;
+      border: 1px solid #e2e8f0;
+      border-radius: 7px;
+      background: #fff;
+      color: #333;
+      font-size: 14px;
+      box-sizing: border-box;
+      outline: none;
+      transition: border-color 0.2s ease;
+}
+
+.formInput:focus,
+.formTextarea:focus {
+      border-color: #64748b;
+}
+
+.formTextarea {
+      min-height: 140px;
+      resize: vertical;
+      line-height: 1.6;
+}
+
+.formButtons {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-top: 20px;
+}
+
+.formButtons button {
+      padding: 9px 18px;
+      border: 1px solid #e2e8f0;
+      border-radius: 7px;
+      background: #fff;
+      color: #475569;
+      font-size: 13px;
+      cursor: pointer;
+}
+
+.formButtons button[type="submit"] {
+      border-color: #0f172a;
+      background: #0f172a;
+      color: #fff;
+}
+
 /* 모바일 */
 @media (max-width: 640px) {
       .devPage {
             padding: 90px 16px 60px;
+      }
+
+      .devPageHeader h1 {
+            font-size: 24px;
       }
 
       .tabMenu {
@@ -302,9 +446,9 @@
       }
 
       .devTable {
-            box-shadow: none;
-            background: transparent;
             border-radius: 0;
+            background: transparent;
+            box-shadow: none;
       }
 
       .devTable thead {
@@ -320,9 +464,9 @@
       .devTable tr {
             display: flex;
             flex-direction: column;
-            padding: 16px;
-            background: #fff;
+            padding: 12px 16px;
             border-radius: 12px;
+            background: #fff;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
       }
 
@@ -330,7 +474,7 @@
             display: flex;
             align-items: flex-start;
             gap: 10px;
-            padding: 8px 0;
+            padding: 10px 0;
             border-bottom: 1px solid #f2f2f2;
             font-size: 13px;
       }
@@ -340,17 +484,42 @@
       }
 
       .devTable td::before {
-            content: attr(data-label);
             flex-shrink: 0;
-            width: 72px;
+            width: 60px;
+            color: #94a3b8;
             font-size: 12px;
             font-weight: 600;
-            color: #aaa;
+            content: attr(data-label);
+      }
+
+      .devTable td[colspan] {
+            justify-content: center;
+            border-bottom: none;
+      }
+
+      .devTable td[colspan]::before {
+            display: none;
       }
 
       .titleCell,
       .contentCell {
             max-width: none;
             min-width: 0;
+      }
+
+      .tableButtons {
+            flex-wrap: wrap;
+      }
+
+      .tableButtons button {
+            padding: 7px 14px;
+      }
+
+      .devAction {
+            margin-bottom: 12px;
+      }
+
+      .createButton {
+            padding: 9px 15px;
       }
 }

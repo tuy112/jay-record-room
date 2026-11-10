@@ -1,6 +1,7 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import type { FormEvent } from 'react';
 
 import Header from '@/components/header';
 import Footer from '@/components/footer';
@@ -10,8 +11,14 @@ import ContentRenderer from '@/components/common/codeRenderer';
 import QuizList from '@/components/common/quiz';
 import Pagination from '@/components/common/pagination';
 
-import { devRecordData } from '@/lib/data/devRecord/devRecordData';
-import { knowledgePosts, KnowledgeItem } from '@/lib/data/knowledge';
+import {
+      DevRecord,
+      getDevRecordList,
+      createDevRecord,
+      updateDevRecord,
+      deleteDevRecord
+} from '@/lib/dev-record/devRecord';
+
 import { studyBoardData, StudyBoardItem } from '@/lib/data/eip-study';
 
 import styles from './page.module.css';
@@ -28,47 +35,51 @@ const PAGE_SIZE = {
 
 type TabType = 'dev' | 'eip';
 
-type DevRecordItem = (typeof devRecordData)[number];
-
-type DevItem =
-      | { type: 'dev'; record: DevRecordItem }
-      | { type: 'coding'; post: KnowledgeItem };
+const emptyForm: DevRecord = {
+      date: new Date().toISOString().slice(0, 10),
+      category: '',
+      page: '',
+      title: '',
+      content: '',
+      tags: []
+};
 
 export default function DevRecordPage() {
       const [activeTab, setActiveTab] = useState<TabType>('dev');
       const [page, setPage] = useState(1);
 
-      const [selectedKnowledge, setSelectedKnowledge] = useState<KnowledgeItem | null>(null);
+      const [devRecords, setDevRecords] = useState<DevRecord[]>([]);
+      const [loading, setLoading] = useState(false);
+
+      const [selectedDevRecord, setSelectedDevRecord] = useState<DevRecord | null>(null);
       const [selectedStudy, setSelectedStudy] = useState<StudyBoardItem | null>(null);
 
       const [isOpen, setIsOpen] = useState(false);
+      const [isFormOpen, setIsFormOpen] = useState(false);
 
-      // 1. 개발일지 데이터
-      const devData = useMemo<DevItem[]>(() => {
-            const records: DevItem[] = devRecordData.map((record) => ({
-                  type: 'dev',
-                  record
-            }));
+      const [editingId, setEditingId] = useState<number | null>(null);
+      const [form, setForm] = useState<DevRecord>(emptyForm);
 
-            const posts: DevItem[] = knowledgePosts.map((post) => ({
-                  type: 'coding',
-                  post
-            }));
+      // 개발일지 조회
+      const fetchDevRecords = async () => {
+            try {
+                  setLoading(true);
 
-            return [...records, ...posts].sort((a, b) => {
-                  const dateA = a.type === 'dev'
-                        ? a.record.date
-                        : a.post.createdAt;
+                  const data = await getDevRecordList();
+                  setDevRecords(data);
+            } catch (error) {
+                  console.error('개발일지 조회 실패:', error);
+                  alert('개발일지를 불러오지 못했습니다.');
+            } finally {
+                  setLoading(false);
+            }
+      };
 
-                  const dateB = b.type === 'dev'
-                        ? b.record.date
-                        : b.post.createdAt;
-
-                  return dateB.localeCompare(dateA);
-            });
+      useEffect(() => {
+            fetchDevRecords();
       }, []);
 
-      // 2. 정보처리기사
+      // 정보처리기사 과목
       const subjects = useMemo(() => {
             return Array.from(
                   new Set(studyBoardData.map((item) => item.subject))
@@ -85,9 +96,9 @@ export default function DevRecordPage() {
             );
       }, [activeSubject]);
 
-      // 3. 현재 탭 데이터
+      // 현재 탭 데이터
       const currentData = activeTab === 'dev'
-            ? devData
+            ? devRecords
             : filteredStudyData;
 
       const totalPages = Math.max(
@@ -100,24 +111,93 @@ export default function DevRecordPage() {
             page * PAGE_SIZE[activeTab]
       );
 
-      // 4. 상단 탭 변경
+      // 상단 탭 변경
       const handleTabChange = (tab: TabType) => {
             setActiveTab(tab);
             setPage(1);
-            setSelectedKnowledge(null);
-            setSelectedStudy(null);
-            setIsOpen(false);
+            handleCloseModal();
+            setIsFormOpen(false);
       };
 
-      // 5. 정보처리기사 과목 변경
+      // 정보처리기사 과목 변경
       const handleSubjectChange = (subject: string) => {
             setActiveSubject(subject);
             setPage(1);
       };
 
-      // 코딩클럽 상세
-      const handleKnowledgeClick = (item: KnowledgeItem) => {
-            setSelectedKnowledge(item);
+      // 개발일지 등록
+      const handleCreate = () => {
+            setEditingId(null);
+            setForm({
+                  ...emptyForm,
+                  date: new Date().toISOString().slice(0, 10)
+            });
+            setIsFormOpen(true);
+      };
+
+      // 개발일지 수정
+      const handleEdit = (record: DevRecord) => {
+            setEditingId(record.id ?? null);
+            setForm({
+                  ...record,
+                  tags: record.tags ?? []
+            });
+            setIsFormOpen(true);
+      };
+
+      // 개발일지 등록 / 수정
+      const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+            e.preventDefault();
+
+            try {
+                  const data = {
+                        ...form,
+                        tags: form.tags
+                              .map((tag) => tag.trim())
+                              .filter(Boolean)
+                  };
+
+                  if (editingId !== null) {
+                        await updateDevRecord(editingId, data);
+                        alert('수정이 완료되었습니다.');
+                  } else {
+                        await createDevRecord(data);
+                        alert('등록이 완료되었습니다.');
+                  }
+
+                  setIsFormOpen(false);
+                  setEditingId(null);
+
+                  await fetchDevRecords();
+            } catch (error) {
+                  console.error('개발일지 저장 실패:', error);
+                  alert('저장에 실패했습니다.');
+            }
+      };
+
+      // 개발일지 삭제
+      const handleDelete = async (id?: number) => {
+            if (id === undefined) return;
+
+            if (!confirm('해당 개발일지를 삭제하시겠습니까?')) {
+                  return;
+            }
+
+            try {
+                  await deleteDevRecord(id);
+                  alert('삭제가 완료되었습니다.');
+
+                  handleCloseModal();
+                  await fetchDevRecords();
+            } catch (error) {
+                  console.error('개발일지 삭제 실패:', error);
+                  alert('삭제에 실패했습니다.');
+            }
+      };
+
+      // 개발일지 상세
+      const handleDevClick = (record: DevRecord) => {
+            setSelectedDevRecord(record);
             setSelectedStudy(null);
             setIsOpen(true);
       };
@@ -125,17 +205,21 @@ export default function DevRecordPage() {
       // 정보처리기사 상세
       const handleStudyClick = (item: StudyBoardItem) => {
             setSelectedStudy(item);
-            setSelectedKnowledge(null);
+            setSelectedDevRecord(null);
             setIsOpen(true);
       };
 
+      // 상세 모달 닫기
       const handleCloseModal = () => {
             setIsOpen(false);
-            setSelectedKnowledge(null);
+            setSelectedDevRecord(null);
             setSelectedStudy(null);
       };
 
+      // 날짜 형식
       const formatDate = (date: string) => {
+            if (!date) return '';
+
             const [year, month, day] = date.split('-');
 
             return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
@@ -175,112 +259,107 @@ export default function DevRecordPage() {
                               <section className={styles.devPageContent}>
                                     {/* 일일 개발일지 */}
                                     {activeTab === 'dev' && (
-                                          <table className={styles.devTable}>
-                                                <thead>
-                                                      <tr>
-                                                            <th>날짜</th>
-                                                            <th>분류</th>
-                                                            <th>제목</th>
-                                                            <th>내용</th>
-                                                            <th>태그</th>
-                                                      </tr>
-                                                </thead>
+                                          <>
+                                                <div className={styles.devAction}>
+                                                      <button
+                                                            type="button"
+                                                            className={styles.createButton}
+                                                            onClick={handleCreate}
+                                                      >
+                                                            + 개발일지 등록
+                                                      </button>
+                                                </div>
 
-                                                <tbody>
-                                                      {pagedData.length === 0 ? (
+                                                <table className={styles.devTable}>
+                                                      <thead>
                                                             <tr>
-                                                                  <td colSpan={5}>
-                                                                        등록된 개발 기록이 없습니다.
-                                                                  </td>
+                                                                  <th>날짜</th>
+                                                                  <th>분류</th>
+                                                                  <th>제목</th>
+                                                                  <th>내용</th>
+                                                                  <th>태그</th>
+                                                                  <th>관리</th>
                                                             </tr>
-                                                      ) : (
-                                                            (pagedData as DevItem[]).map((item) => {
-                                                                  if (item.type === 'dev') {
-                                                                        const record = item.record;
+                                                      </thead>
 
-                                                                        return (
-                                                                              <tr key={`dev-${record.id}`}>
-                                                                                    <td data-label="날짜">
-                                                                                          {record.date}
-                                                                                    </td>
-
-                                                                                    <td data-label="분류">
-                                                                                          <span className={styles.categoryBadge}>
-                                                                                                개발일지
-                                                                                          </span>
-                                                                                    </td>
-
-                                                                                    <td data-label="제목">
-                                                                                          {record.title}
-                                                                                    </td>
-
-                                                                                    <td data-label="내용">
-                                                                                          {record.content}
-                                                                                    </td>
-
-                                                                                    <td data-label="태그">
-                                                                                          <div className={styles.tagWrap}>
-                                                                                                {record.tags.map((tag) => (
-                                                                                                      tag && (
-                                                                                                            <span
-                                                                                                                  key={tag}
-                                                                                                                  className={styles.tag}
-                                                                                                            >
-                                                                                                                  {tag}
-                                                                                                            </span>
-                                                                                                      )
-                                                                                                ))}
-                                                                                          </div>
-                                                                                    </td>
-                                                                              </tr>
-                                                                        );
-                                                                  }
-
-                                                                  const post = item.post;
-
-                                                                  return (
+                                                      <tbody>
+                                                            {loading ? (
+                                                                  <tr>
+                                                                        <td colSpan={6}>
+                                                                              불러오는 중입니다.
+                                                                        </td>
+                                                                  </tr>
+                                                            ) : pagedData.length === 0 ? (
+                                                                  <tr>
+                                                                        <td colSpan={6}>
+                                                                              등록된 개발 기록이 없습니다.
+                                                                        </td>
+                                                                  </tr>
+                                                            ) : (
+                                                                  (pagedData as DevRecord[]).map((record) => (
                                                                         <tr
-                                                                              key={`coding-${post.id}`}
+                                                                              key={record.id}
                                                                               className={styles.clickableRow}
-                                                                              onClick={() =>
-                                                                                    handleKnowledgeClick(post)
-                                                                              }
+                                                                              onClick={() => handleDevClick(record)}
                                                                         >
                                                                               <td data-label="날짜">
-                                                                                    {post.createdAt}
+                                                                                    {record.date}
                                                                               </td>
-
                                                                               <td data-label="분류">
                                                                                     <span className={styles.categoryBadge}>
-                                                                                          코딩클럽
+                                                                                          {record.category || '개발일지'}
                                                                                     </span>
                                                                               </td>
-
                                                                               <td data-label="제목">
-                                                                                    <div className={styles.titleCell}>
-                                                                                          {post.title}
-                                                                                    </div>
-
-                                                                                    <div className={styles.subtitle}>
-                                                                                          {post.subtitle}
-                                                                                    </div>
+                                                                                    {record.title}
                                                                               </td>
-
                                                                               <td data-label="내용">
-                                                                                    {post.topic}
+                                                                                    {record.content}
+                                                                              </td>
+                                                                              <td data-label="태그">
+                                                                                    <div className={styles.tagWrap}>
+                                                                                          {(record.tags ?? []).map((tag) => (
+                                                                                                tag && (
+                                                                                                      <span
+                                                                                                            key={tag}
+                                                                                                            className={styles.tag}
+                                                                                                      >
+                                                                                                            {tag}
+                                                                                                      </span>
+                                                                                                )
+                                                                                          ))}
+                                                                                    </div>
                                                                               </td>
 
-                                                                              <td data-label="태그">
-                                                                                    <span className={styles.tag}>
-                                                                                          상세보기
-                                                                                    </span>
+                                                                              <td data-label="관리">
+                                                                                    <div className={styles.tableButtons}>
+                                                                                          <button
+                                                                                                type="button"
+                                                                                                onClick={(e) => {
+                                                                                                      e.stopPropagation();
+                                                                                                      handleEdit(record);
+                                                                                                }}
+                                                                                          >
+                                                                                                수정
+                                                                                          </button>
+
+                                                                                          <button
+                                                                                                type="button"
+                                                                                                onClick={(e) => {
+                                                                                                      e.stopPropagation();
+                                                                                                      handleDelete(record.id);
+                                                                                                }}
+                                                                                          >
+                                                                                                삭제
+                                                                                          </button>
+                                                                                    </div>
                                                                               </td>
                                                                         </tr>
-                                                                  );
-                                                            })
-                                                      )}
-                                                </tbody>
-                                          </table>
+                                                                  ))
+                                                            )}
+                                                      </tbody>
+                                                </table>
+                                          </>
                                     )}
 
                                     {/* 정보처리기사 */}
@@ -296,9 +375,7 @@ export default function DevRecordPage() {
                                                                               ? styles.subjectTabActive
                                                                               : ''
                                                                   }`}
-                                                                  onClick={() =>
-                                                                        handleSubjectChange(subject)
-                                                                  }
+                                                                  onClick={() => handleSubjectChange(subject)}
                                                             >
                                                                   {`${index + 1}과목`}
                                                             </button>
@@ -325,16 +402,12 @@ export default function DevRecordPage() {
                                                                   align: 'center'
                                                             }
                                                       ]}
-                                                      data={(pagedData as StudyBoardItem[]).map(
-                                                            (item) => ({
-                                                                  ...item,
-                                                                  createdAt: formatDate(item.createdAt)
-                                                            })
-                                                      )}
+                                                      data={(pagedData as StudyBoardItem[]).map((item) => ({
+                                                            ...item,
+                                                            createdAt: formatDate(item.createdAt)
+                                                      }))}
                                                       onRowClick={(row) =>
-                                                            handleStudyClick(
-                                                                  row as StudyBoardItem
-                                                            )
+                                                            handleStudyClick(row as StudyBoardItem)
                                                       }
                                                 />
                                           </>
@@ -354,29 +427,165 @@ export default function DevRecordPage() {
 
                   <Footer />
 
-                  {/* 코딩클럽 상세 모달 */}
+                  {/* 개발일지 등록 / 수정 모달 */}
                   <CommonModal
-                        open={isOpen && !!selectedKnowledge}
+                        open={isFormOpen}
+                        onClose={() => setIsFormOpen(false)}
+                  >
+                        <div className={styles.modalContent}>
+                              <h3 className={styles.modalTitle}>
+                                    {editingId !== null ? '개발일지 수정' : '개발일지 등록'}
+                              </h3>
+
+                              <form onSubmit={handleSubmit}>
+                                    <div className={styles.formGroup}>
+                                          <label className={styles.formLabel}>날짜</label>
+                                          <input
+                                                className={styles.formInput}
+                                                type="date"
+                                                required
+                                                value={form.date}
+                                                onChange={(e) =>
+                                                      setForm({ ...form, date: e.target.value })
+                                                }
+                                          />
+                                    </div>
+
+                                    <div className={styles.formGroup}>
+                                          <label className={styles.formLabel}>분류</label>
+                                          <input
+                                                className={styles.formInput}
+                                                type="text"
+                                                value={form.category}
+                                                onChange={(e) =>
+                                                      setForm({ ...form, category: e.target.value })
+                                                }
+                                                placeholder="개발일지"
+                                          />
+                                    </div>
+
+                                    <div className={styles.formGroup}>
+                                          <label className={styles.formLabel}>수정 페이지</label>
+                                          <input
+                                                className={styles.formInput}
+                                                type="text"
+                                                value={form.page}
+                                                onChange={(e) =>
+                                                      setForm({ ...form, page: e.target.value })
+                                                }
+                                                placeholder="예: /dev-record"
+                                          />
+                                    </div>
+
+                                    <div className={styles.formGroup}>
+                                          <label className={styles.formLabel}>제목</label>
+                                          <input
+                                                className={styles.formInput}
+                                                type="text"
+                                                required
+                                                value={form.title}
+                                                onChange={(e) =>
+                                                      setForm({ ...form, title: e.target.value })
+                                                }
+                                          />
+                                    </div>
+
+                                    <div className={styles.formGroup}>
+                                          <label className={styles.formLabel}>내용</label>
+                                          <textarea
+                                                className={styles.formTextarea}
+                                                rows={6}
+                                                value={form.content}
+                                                onChange={(e) =>
+                                                      setForm({ ...form, content: e.target.value })
+                                                }
+                                          />
+                                    </div>
+
+                                    <div className={styles.formGroup}>
+                                          <label className={styles.formLabel}>태그</label>
+                                          <input
+                                                className={styles.formInput}
+                                                type="text"
+                                                value={form.tags.join(', ')}
+                                                onChange={(e) =>
+                                                      setForm({
+                                                            ...form,
+                                                            tags: e.target.value.split(',')
+                                                      })
+                                                }
+                                                placeholder="쉼표(,)로 구분해서 입력하세요."
+                                          />
+                                    </div>
+
+                                    <div className={styles.formButtons}>
+                                          <button
+                                                type="button"
+                                                onClick={() => setIsFormOpen(false)}
+                                          >
+                                                취소
+                                          </button>
+
+                                          <button type="submit">
+                                                {editingId !== null ? '수정' : '등록'}
+                                          </button>
+                                    </div>
+                              </form>
+                        </div>
+                  </CommonModal>
+
+                  {/* 개발일지 상세 모달 */}
+                  <CommonModal
+                        open={isOpen && !!selectedDevRecord}
                         onClose={handleCloseModal}
                   >
-                        {selectedKnowledge && (
+                        {selectedDevRecord && (
                               <div className={styles.modalContent}>
                                     <span className={styles.categoryBadge}>
-                                          {selectedKnowledge.topic}
+                                          {selectedDevRecord.category || '개발일지'}
                                     </span>
                                     <h3 className={styles.modalTitle}>
-                                          {selectedKnowledge.title}
+                                          {selectedDevRecord.title}
                                     </h3>
                                     <p className={styles.modalSubtitle}>
-                                          {selectedKnowledge.subtitle}
+                                          수정 페이지 : {selectedDevRecord.page || '-'}
                                     </p>
                                     <p className={styles.modalDate}>
-                                          {selectedKnowledge.createdAt}
+                                          {selectedDevRecord.date}
                                     </p>
                                     <div className={styles.modalBody}>
-                                          <ContentRenderer
-                                                content={selectedKnowledge.content}
-                                          />
+                                          {selectedDevRecord.content}
+                                    </div>
+
+                                    {(selectedDevRecord.tags ?? []).length > 0 && (
+                                          <div className={styles.tagWrap}>
+                                                {selectedDevRecord.tags.map((tag) => (
+                                                      <span key={tag} className={styles.tag}>
+                                                            {tag}
+                                                      </span>
+                                                ))}
+                                          </div>
+                                    )}
+
+                                    <div className={styles.modalFooter}>
+                                          <button
+                                                type="button"
+                                                className={styles.editButton}
+                                                onClick={() => {
+                                                      handleEdit(selectedDevRecord);
+                                                      handleCloseModal();
+                                                }}
+                                          >
+                                                수정
+                                          </button>
+
+                                          <button
+                                                type="button"
+                                                className={styles.deleteButton}
+                                                onClick={() => handleDelete(selectedDevRecord.id)}
+                                          >
+                                                삭제
+                                          </button>
                                     </div>
                               </div>
                         )}
@@ -393,52 +602,37 @@ export default function DevRecordPage() {
                                     <span className={styles.categoryBadge}>
                                           {selectedStudy.subject}
                                     </span>
+
                                     <h3 className={styles.modalTitle}>
                                           {selectedStudy.title}
                                     </h3>
+
                                     <p className={styles.modalSubtitle}>
                                           ID : {selectedStudy.id}
                                     </p>
+
                                     <p className={styles.modalDate}>
                                           {formatDate(selectedStudy.createdAt)}
                                     </p>
 
                                     <div className={styles.modalBody}>
-                                          <ContentRenderer
-                                                content={selectedStudy.content}
-                                          />
+                                          <ContentRenderer content={selectedStudy.content} />
 
                                           {selectedStudy.memoryTip && (
                                                 <div className={styles.memorySection}>
                                                       <p className={styles.sectionLabel}>💡 암기팁</p>
                                                       <div className={styles.memoryBox}>
-                                                            <ContentRenderer
-                                                                  content={selectedStudy.memoryTip}
-                                                            />
+                                                            <ContentRenderer content={selectedStudy.memoryTip} />
                                                       </div>
                                                 </div>
                                           )}
 
-                                          {selectedStudy.quiz &&
-                                                selectedStudy.quiz.length > 0 && (
-                                                      <div className={styles.quizSection}>
-                                                            <p className={styles.sectionLabel}>📝 관련 기출문제</p>
-                                                            <QuizList
-                                                                  quiz={selectedStudy.quiz}
-                                                            />
-                                                      </div>
-                                                )}
-                                    </div>
-
-                                    <div className={styles.modalFooter}>
-                                          <button
-                                                className={styles.editButton}
-                                                onClick={() =>
-                                                      alert('수정 기능 준비중')
-                                                }
-                                          >
-                                                수정
-                                          </button>
+                                          {selectedStudy.quiz && selectedStudy.quiz.length > 0 && (
+                                                <div className={styles.quizSection}>
+                                                      <p className={styles.sectionLabel}>📝 관련 기출문제</p>
+                                                      <QuizList quiz={selectedStudy.quiz} />
+                                                </div>
+                                          )}
                                     </div>
                               </div>
                         )}
