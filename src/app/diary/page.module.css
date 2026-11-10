@@ -2,8 +2,8 @@
 .diaryPage {
       width: 100%;
       min-height: 100vh;
-      background: #f8fafc;
       padding: 70px 18px 80px;
+      background: #f8fafc;
 }
 
 .diaryPageInner {
@@ -33,15 +33,16 @@
       flex-direction: column;
 }
 
+
 /* 일기 작성 */
 .writeBox {
       display: flex;
       flex-direction: column;
       gap: 12px;
-      background: #fff;
-      border-radius: 12px;
       padding: 24px;
       margin-bottom: 24px;
+      background: #fff;
+      border-radius: 12px;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
@@ -51,6 +52,7 @@
       color: #0f172a;
 }
 
+/* 감정 선택 */
 .emotionSelect {
       display: flex;
       flex-wrap: wrap;
@@ -69,6 +71,7 @@
       transition: all 0.15s ease;
 }
 
+/* 입력 필드 */
 .titleInput,
 .contentInput,
 .musicInput {
@@ -90,6 +93,7 @@
       resize: vertical;
 }
 
+/* 음악 입력 */
 .musicInputRow {
       display: flex;
       flex-wrap: wrap;
@@ -102,46 +106,89 @@
       font-size: 13px;
 }
 
-/* 작성 버튼 영역 */
+
+/* 작성 버튼 */
 .formButtonRow {
       display: flex;
       justify-content: flex-end;
       gap: 10px;
 }
 
-.saveBtn {
-      align-self: flex-end;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 8px;
-      background: #0f172a;
-      color: #fff;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.2s ease;
-}
-
-.saveBtn:hover {
-      background: #334155;
-}
-
-/* 수정 취소 버튼 */
+.saveBtn,
 .cancelBtn {
       padding: 10px 20px;
-      border: 1px solid #cbd5e1;
       border-radius: 8px;
-      background: #fff;
-      color: #475569;
       font-size: 14px;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.2s ease;
 }
 
+.saveBtn {
+      border: none;
+      background: #0f172a;
+      color: #fff;
+}
+
+.saveBtn:hover {
+      background: #334155;
+}
+
+.cancelBtn {
+      border: 1px solid #cbd5e1;
+      background: #fff;
+      color: #475569;
+}
+
 .cancelBtn:hover {
       background: #f1f5f9;
 }
+
+
+/* 일기 검색 */
+.searchBox {
+      display: flex;
+      gap: 10px;
+      padding: 16px;
+      margin-bottom: 20px;
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+}
+
+.searchBox select {
+      flex: 1;
+      min-width: 0;
+      padding: 10px 12px;
+      border: 1px solid #dbe1ea;
+      border-radius: 8px;
+      background: #fff;
+      color: #334155;
+      font-size: 14px;
+      outline: none;
+      cursor: pointer;
+}
+
+.searchBox select:focus {
+      border-color: #64748b;
+}
+
+.searchBox button {
+      padding: 10px 16px;
+      border: 1px solid #dbe1ea;
+      border-radius: 8px;
+      background: #fff;
+      color: #475569;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+}
+
+.searchBox button:hover {
+      background: #f1f5f9;
+}
+
 
 /* 일기 목록 */
 .entryList {
@@ -151,9 +198,9 @@
 }
 
 .entryCard {
+      padding: 20px;
       background: #fff;
       border-radius: 12px;
-      padding: 20px;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
@@ -178,20 +225,21 @@
 }
 
 .entryTitle {
+      margin-bottom: 6px;
       font-size: 16px;
       font-weight: 700;
       color: #0f172a;
-      margin-bottom: 6px;
 }
 
 .entryContent {
-      font-size: 14px;
-      color: #475569;
-      line-height: 1.6;
       margin-bottom: 14px;
+      font-size: 14px;
+      line-height: 1.6;
+      color: #475569;
       white-space: pre-wrap;
       overflow-wrap: anywhere;
 }
+
 
 /* 음악 */
 .musicCard {
@@ -208,8 +256,8 @@
 }
 
 .musicInfo {
-      flex: 1;
       display: flex;
+      flex: 1;
       flex-direction: column;
       min-width: 0;
 }
@@ -232,7 +280,8 @@
       text-decoration: none;
 }
 
-/* 수정 및 삭제 버튼 */
+
+/* 수정 및 삭제 */
 .entryActions {
       display: flex;
       justify-content: flex-end;
@@ -257,8 +306,8 @@
 }
 
 .editBtn:hover {
-      background: #eff6ff;
       border-color: #2563eb;
+      background: #eff6ff;
 }
 
 .deleteBtn {
@@ -266,14 +315,20 @@
 }
 
 .deleteBtn:hover {
-      background: #fef2f2;
       border-color: #dc2626;
+      background: #fef2f2;
 }
 
-/* 모바일 */
+
+
+/* 모바일 반응형 */
 @media (max-width: 640px) {
       .diaryPage {
             padding: 70px 14px 60px;
+      }
+
+      .diaryPageHeader h1 {
+            font-size: 24px;
       }
 
       .writeBox {
@@ -287,6 +342,22 @@
       .saveBtn,
       .cancelBtn {
             width: 100%;
+      }
+
+      .searchBox {
+            gap: 6px;
+            padding: 12px;
+      }
+
+      .searchBox select {
+            padding: 9px 4px;
+            font-size: 12px;
+      }
+
+      .searchBox button {
+            padding: 9px;
+            font-size: 12px;
+            white-space: nowrap;
       }
 
       .entryCard {

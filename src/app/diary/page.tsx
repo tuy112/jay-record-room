@@ -4,8 +4,10 @@ import { useState, useEffect } from 'react';
 
 import Header from '@/components/header';
 import Footer from '@/components/footer';
+import Pagination from '@/components/common/pagination';
 
 import {
+      emotionList,
       getDiaryList,
       createDiary,
       updateDiary,
@@ -14,9 +16,9 @@ import {
       type EmotionType,
 } from '@/lib/diary/diary';
 
-import { emotionList } from '@/lib/data/diary/diaryData';
-
 import styles from './page.module.css';
+
+const PAGE_SIZE = 5;
 
 export default function DiaryPage() {
       const [entries, setEntries] = useState<Diary[]>([]);
@@ -32,10 +34,19 @@ export default function DiaryPage() {
       const [editId, setEditId] = useState<number | null>(null);
       const [loading, setLoading] = useState(true);
 
+      // 검색 조건
+      const [selectedYear, setSelectedYear] = useState('all');
+      const [selectedMonth, setSelectedMonth] = useState('all');
+      const [selectedDay, setSelectedDay] = useState('all');
+
+      // Pagination
+      const [page, setPage] = useState(1);
+
       // 일기 목록 조회
       const fetchDiaryList = async () => {
             try {
                   const data = await getDiaryList();
+
                   setEntries(data);
             } catch (error) {
                   console.error('일기 조회 실패:', error);
@@ -49,9 +60,45 @@ export default function DiaryPage() {
             fetchDiaryList();
       }, []);
 
+      // 검색 조건 변경 시 첫 페이지로 이동
+      useEffect(() => {
+            setPage(1);
+      }, [selectedYear, selectedMonth, selectedDay]);
+
       const getEmotionInfo = (emotion: EmotionType) => {
             return emotionList.find((item) => item.key === emotion);
       };
+
+      // 년도 목록
+      const yearList = Array.from(
+            new Set(entries.map((entry) => entry.diaryDate.substring(0, 4)))
+      ).sort((a, b) => Number(b) - Number(a));
+
+      // 일기 검색 및 최신순 정렬
+      const filteredEntries = entries
+            .filter((entry) => {
+                  const [year, month, day] = entry.diaryDate.split('-');
+
+                  return (
+                        (selectedYear === 'all' || year === selectedYear) &&
+                        (selectedMonth === 'all' || Number(month) === Number(selectedMonth)) &&
+                        (selectedDay === 'all' || Number(day) === Number(selectedDay))
+                  );
+            })
+            .sort((a, b) => b.diaryDate.localeCompare(a.diaryDate));
+
+      // Pagination
+      const totalPages = Math.max(
+            1,
+            Math.ceil(filteredEntries.length / PAGE_SIZE)
+      );
+
+      const currentPage = Math.min(page, totalPages);
+
+      const paginatedEntries = filteredEntries.slice(
+            (currentPage - 1) * PAGE_SIZE,
+            currentPage * PAGE_SIZE
+      );
 
       // 입력창 초기화
       const resetForm = () => {
@@ -91,6 +138,7 @@ export default function DiaryPage() {
                   }
 
                   resetForm();
+                  setPage(1);
                   await fetchDiaryList();
             } catch (error) {
                   console.error('일기 저장 실패:', error);
@@ -260,14 +308,79 @@ export default function DiaryPage() {
                                           </div>
                                     </div>
 
+                                    {/* 일기 검색 */}
+                                    <div className={styles.searchBox}>
+                                          <select
+                                                value={selectedYear}
+                                                onChange={(e) =>
+                                                      setSelectedYear(e.target.value)
+                                                }
+                                          >
+                                                <option value="all">전체 년도</option>
+
+                                                {yearList.map((year) => (
+                                                      <option key={year} value={year}>
+                                                            {year}년
+                                                      </option>
+                                                ))}
+                                          </select>
+
+                                          <select
+                                                value={selectedMonth}
+                                                onChange={(e) =>
+                                                      setSelectedMonth(e.target.value)
+                                                }
+                                          >
+                                                <option value="all">전체 월</option>
+
+                                                {Array.from(
+                                                      { length: 12 },
+                                                      (_, i) => i + 1
+                                                ).map((month) => (
+                                                      <option key={month} value={month}>
+                                                            {month}월
+                                                      </option>
+                                                ))}
+                                          </select>
+
+                                          <select
+                                                value={selectedDay}
+                                                onChange={(e) =>
+                                                      setSelectedDay(e.target.value)
+                                                }
+                                          >
+                                                <option value="all">전체 일</option>
+
+                                                {Array.from(
+                                                      { length: 31 },
+                                                      (_, i) => i + 1
+                                                ).map((day) => (
+                                                      <option key={day} value={day}>
+                                                            {day}일
+                                                      </option>
+                                                ))}
+                                          </select>
+
+                                          <button
+                                                type="button"
+                                                onClick={() => {
+                                                      setSelectedYear('all');
+                                                      setSelectedMonth('all');
+                                                      setSelectedDay('all');
+                                                }}
+                                          >
+                                                초기화
+                                          </button>
+                                    </div>
+
                                     {/* 일기 목록 */}
                                     <div className={styles.entryList}>
                                           {loading ? (
                                                 <p>일기를 불러오는 중입니다.</p>
-                                          ) : entries.length === 0 ? (
+                                          ) : filteredEntries.length === 0 ? (
                                                 <p>작성된 일기가 없습니다.</p>
                                           ) : (
-                                                entries.map((entry) => {
+                                                paginatedEntries.map((entry) => {
                                                       const emotionInfo = getEmotionInfo(
                                                             entry.emotion
                                                       );
@@ -374,6 +487,15 @@ export default function DiaryPage() {
                                                 })
                                           )}
                                     </div>
+
+                                    {/* Pagination */}
+                                    {!loading && filteredEntries.length > 0 && (
+                                          <Pagination
+                                                page={currentPage}
+                                                totalPages={totalPages}
+                                                onChange={setPage}
+                                          />
+                                    )}
                               </section>
                         </div>
                   </main>
