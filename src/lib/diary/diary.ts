@@ -1,5 +1,5 @@
-// const API_URL = 'http://192.168.0.37:8087/api/diary';
-const API_URL = 'http://localhost:8087/api/diary';
+const API_URL = '/api/diary';
+// const API_URL = 'http://localhost:8087/api/diary';
 
 export type EmotionType =
       | 'happy'

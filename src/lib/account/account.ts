@@ -1,5 +1,5 @@
-// const API_URL = 'http://192.168.0.37:8087/api/account';
-const API_URL = 'http://localhost:8087/api/account';
+const API_URL = '/api/account';
+// const API_URL = 'http://localhost:8087/api/account';
 
 // 타입
 export type EntryType = 'income' | 'fixed' | 'saving';

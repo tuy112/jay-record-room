@@ -1,5 +1,6 @@
 // const API_URL = 'http://192.168.0.37:8087/api/dev-record';
-const API_URL = 'http://localhost:8087/api/dev-record';
+// const API_URL = 'http://localhost:8087/api/dev-record';
+const API_URL = '/api/dev-record';
 
 export interface DevRecord {
       id?: number;

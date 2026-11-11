@@ -3,6 +3,11 @@ import { NextRequest, NextResponse } from "next/server";
 export function proxy(request: NextRequest) {
       const { pathname } = request.nextUrl;
 
+      // API 요청은 권한 검사에서 제외
+      if (pathname.startsWith("/api/")) {
+            return NextResponse.next();
+      }
+
       const isLoggedIn = request.cookies.get("jstory_auth")?.value === "ok";
       const userRole = request.cookies.get("jstory_role")?.value;
 

@@ -6,8 +6,8 @@ const nextConfig: NextConfig = {
       async rewrites() {
             return [
                   {
-                        source: '/api/rms/:path*',
-                        destination: 'http://192.168.0.36:8087/api/rms/:path*',
+                        source: '/api/:path*',
+                        destination: 'http://192.168.0.37:8087/api/:path*',
                   },
             ];
       },
