@@ -43,25 +43,7 @@ const rooms = [
       },
       {
             number: '04',
-            title: '정보처리기사 요약',
-            description: '27년에는 정처기 꼭 따자!',
-            href: '/eip-study',
-            category: 'STUDY',
-            symbol: 'Aa',
-            tone: 'purple',
-      },
-      {
-            number: '05',
-            title: 'RMS 기록방',
-            description: '기록관리시스템 로그분석 + 새로운 기능 연구하는 공간',
-            href: '/rms',
-            category: 'WORK',
-            symbol: '≡',
-            tone: 'blue',
-      },
-      {
-            number: '06',
-            title: '개발기록',
+            title: '일일 개발일지',
             description: '개발하면서 배운 내용과 문제 해결 경험을 기록하세요.',
             href: '/dev-record',
             category: 'DEVELOP',
@@ -69,26 +51,35 @@ const rooms = [
             tone: 'navy',
       },
       {
-            number: '07',
-            title: '코딩클럽',
-            description: '함께 공부하고 풀어 본 코드와 아이디어를 정리하세요.',
-            href: '/coding-club',
-            category: 'TOGETHER',
-            symbol: '{}',
-            tone: 'green',
+            number: '05',
+            title: '정보처리기사 공부방',
+            description: '27년에는 정처기 꼭 따자!',
+            href: '/eip-study',
+            category: 'STUDY',
+            symbol: 'Aa',
+            tone: 'purple',
       },
-      ];
+      {
+            number: '06',
+            title: 'RMS 기록방',
+            description: '기록관리시스템 로그분석 + 새로운 기능 연구하는 공간',
+            href: '/rms',
+            category: 'WORK',
+            symbol: '≡',
+            tone: 'blue',
+      }
+];
 
-      export default function HomePage({ userRole }: HomePageProps) {
+export default function HomePage({ userRole }: HomePageProps) {
       const [showModal, setShowModal] = useState(false);
-
+      
       const handleModal = (
             e: React.MouseEvent<HTMLAnchorElement>
       ) => {
             e.preventDefault();
             setShowModal(true);
       };
-
+      
       const handleRoomClick = (
             e: React.MouseEvent<HTMLAnchorElement>,
             href: string
@@ -103,14 +94,6 @@ const rooms = [
       return (
             <>
                   <Header />
-
-                  <Modal
-                        open={showModal}
-                        onClose={() => setShowModal(false)}
-                        title="접근 권한 안내"
-                  >
-                        <p>관리자 계정만 들어갈 수 있습니다.</p>
-                  </Modal>
 
                   <main className={styles.page}>
                         <div className={styles.container}>
@@ -161,10 +144,10 @@ const rooms = [
                                           <div className={styles.quoteCard}>
                                                 <span aria-hidden="true">“</span>
                                                 <p>
-                                                      기록하는 오늘이<br />
+                                                      기록하는 오늘이 <br/>
                                                       내일의 나를 만듭니다.
                                                 </p>
-                                                <small>하루 한 줄 ㄱㄱ</small>
+                                                <small>매일매일 꾸준하게..!</small>
                                           </div>
                                     </div>
                               </section>
@@ -172,6 +155,15 @@ const rooms = [
                   </main>
 
                   <Footer />
+
+                  {/* 관리자 페이지 모달 */}
+                  <Modal
+                        open={showModal}
+                        onClose={() => setShowModal(false)}
+                        title="접근 권한 안내"
+                  >
+                        <p>관리자 계정만 들어갈 수 있습니다.</p>
+                  </Modal>
             </>
       );
 }
