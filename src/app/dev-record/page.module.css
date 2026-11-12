@@ -1,5 +1,3 @@
-
-/* 페이지 */
 .devPage {
       width: 100%;
       min-height: 100vh;
@@ -35,6 +33,7 @@
       gap: 20px;
 }
 
+
 /* 상단 탭 */
 .tabMenu {
       display: flex;
@@ -65,9 +64,11 @@
       color: #0f172a;
 }
 
+
 /* 정보처리기사 과목 탭 */
 .subjectTabs {
       display: flex;
+      justify-content: center;
       flex-wrap: wrap;
       gap: 8px;
       margin-bottom: 20px;
@@ -89,17 +90,12 @@
       color: #0f172a;
 }
 
-.subjectTabActive {
-      border-color: #0f172a;
-      background: #0f172a;
-      color: #fff;
-}
 
 /* 개발일지 등록 영역 */
 .devAction {
       display: flex;
       justify-content: flex-end;
-      margin-bottom: 16px;
+      margin-bottom: 10px;
 }
 
 .createButton {
@@ -118,37 +114,41 @@
       background: #334155;
 }
 
+
 /* 개발일지 테이블 */
 .devTable {
       width: 100%;
-      border-collapse: collapse;
+      border-collapse: separate;
+      border-spacing: 0;
+      table-layout: fixed;
       overflow: hidden;
+      border: 1px solid #e2e8f0;
       border-radius: 12px;
       background: #fff;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
 }
 
 .devTable thead {
-      background: #191919;
+      background: #f8fafc;
 }
 
 .devTable th {
-      padding: 16px 20px;
-      color: #fff;
+      padding: 15px 16px;
+      border-bottom: 1px solid #e2e8f0;
+      color: #475569;
       font-size: 13px;
       font-weight: 600;
-      letter-spacing: 0.02em;
       text-align: left;
       white-space: nowrap;
 }
 
 .devTable td {
-      padding: 18px 20px;
-      border-bottom: 1px solid #f0f0f0;
-      color: #333;
-      font-size: 14px;
-      line-height: 1.5;
+      padding: 16px;
+      border-bottom: 1px solid #f1f5f9;
+      color: #334155;
+      font-size: 13px;
+      line-height: 1.6;
       vertical-align: middle;
+      overflow-wrap: break-word;
 }
 
 .devTable tbody tr {
@@ -156,7 +156,7 @@
 }
 
 .devTable tbody tr:hover {
-      background: #fafafa;
+      background: #f8fafc;
 }
 
 .devTable tbody tr:last-child td {
@@ -168,19 +168,23 @@
 }
 
 .dateCell {
-      color: #888;
-      font-size: 13px;
+      color: #64748b;
+      font-size: 12px;
       white-space: nowrap;
 }
 
 .categoryBadge {
-      display: inline-block;
-      padding: 4px 10px;
+      display: inline-flex;
+      align-items: center;
+      align-self: flex-start;
+      width: fit-content;
+      max-width: 100%;
+      padding: 4px 9px;
       border-radius: 6px;
-      background: #191919;
-      color: #fff;
+      background: #f1f5f9;
+      color: #475569;
       font-size: 12px;
-      font-weight: 500;
+      font-weight: 600;
       white-space: nowrap;
 }
 
@@ -193,20 +197,20 @@
 
 .titleCell {
       min-width: 160px;
-      color: #1a1a1a;
+      color: #0f172a;
       font-weight: 600;
 }
 
 .subtitle {
       margin-top: 4px;
-      color: #999;
+      color: #94a3b8;
       font-size: 12px;
 }
 
 .contentCell {
       max-width: 320px;
-      color: #666;
-      line-height: 1.5;
+      color: #64748b;
+      line-height: 1.6;
 }
 
 .tagWrap {
@@ -217,8 +221,8 @@
 
 .tag {
       display: inline-block;
-      padding: 3px 10px;
-      border-radius: 12px;
+      padding: 4px 10px;
+      border-radius: 20px;
       background: #eef2ff;
       color: #4f46e5;
       font-size: 12px;
@@ -226,17 +230,18 @@
       white-space: nowrap;
 }
 
+
 /* 테이블 관리 버튼 */
 .tableButtons {
       display: flex;
-      gap: 6px;
       justify-content: center;
+      gap: 6px;
 }
 
 .tableButtons button {
-      padding: 6px 11px;
+      padding: 7px 12px;
       border: 1px solid #e2e8f0;
-      border-radius: 6px;
+      border-radius: 7px;
       background: #fff;
       color: #475569;
       font-size: 12px;
@@ -258,6 +263,7 @@
       border-color: #fecaca;
       background: #fef2f2;
 }
+
 
 /* 공통 모달 */
 .modalContent {
@@ -317,6 +323,7 @@
       background: #f8fafc;
 }
 
+
 /* 상세 모달 하단 버튼 */
 .modalFooter {
       display: flex;
@@ -353,6 +360,7 @@
 .deleteButton:hover {
       background: #fef2f2;
 }
+
 
 /* 등록 및 수정 폼 */
 .formGroup {
@@ -415,6 +423,7 @@
       color: #fff;
 }
 
+
 /* 모바일 */
 @media (max-width: 640px) {
       .devPage {
@@ -445,7 +454,16 @@
             font-size: 12px;
       }
 
+      .devAction {
+            margin-bottom: 12px;
+      }
+
+      .createButton {
+            padding: 9px 15px;
+      }
+
       .devTable {
+            border: none;
             border-radius: 0;
             background: transparent;
             box-shadow: none;
@@ -464,18 +482,23 @@
       .devTable tr {
             display: flex;
             flex-direction: column;
-            padding: 12px 16px;
+            padding: 10px 16px;
+            border: 1px solid #edf0f5;
             border-radius: 12px;
             background: #fff;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+            box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
+      }
+
+      .devTable tbody tr:hover {
+            background: #fff;
       }
 
       .devTable td {
             display: flex;
             align-items: flex-start;
             gap: 10px;
-            padding: 10px 0;
-            border-bottom: 1px solid #f2f2f2;
+            padding: 11px 0;
+            border-bottom: 1px solid #f1f5f9;
             font-size: 13px;
       }
 
@@ -494,7 +517,10 @@
 
       .devTable td[colspan] {
             justify-content: center;
+            padding: 24px 0;
             border-bottom: none;
+            color: #94a3b8;
+            font-size: 13px;
       }
 
       .devTable td[colspan]::before {
@@ -507,19 +533,16 @@
             min-width: 0;
       }
 
+      .tagWrap {
+            gap: 5px;
+      }
+
       .tableButtons {
+            justify-content: flex-start;
             flex-wrap: wrap;
       }
 
       .tableButtons button {
             padding: 7px 14px;
-      }
-
-      .devAction {
-            margin-bottom: 12px;
-      }
-
-      .createButton {
-            padding: 9px 15px;
       }
 }

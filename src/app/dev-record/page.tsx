@@ -285,15 +285,11 @@ export default function DevRecordPage() {
                                                       <tbody>
                                                             {loading ? (
                                                                   <tr>
-                                                                        <td colSpan={6}>
-                                                                              불러오는 중입니다.
-                                                                        </td>
+                                                                        <td colSpan={6}>불러오는 중입니다.</td>
                                                                   </tr>
                                                             ) : pagedData.length === 0 ? (
                                                                   <tr>
-                                                                        <td colSpan={6}>
-                                                                              등록된 개발 기록이 없습니다.
-                                                                        </td>
+                                                                        <td colSpan={6}>등록된 개발 기록이 없습니다.</td>
                                                                   </tr>
                                                             ) : (
                                                                   (pagedData as DevRecord[]).map((record) => (
@@ -302,7 +298,7 @@ export default function DevRecordPage() {
                                                                               className={styles.clickableRow}
                                                                               onClick={() => handleDevClick(record)}
                                                                         >
-                                                                              <td data-label="날짜">
+                                                                              <td data-label="날짜" className={styles.dateCell}>
                                                                                     {record.date}
                                                                               </td>
                                                                               <td data-label="분류">
@@ -310,12 +306,13 @@ export default function DevRecordPage() {
                                                                                           {record.category || '개발일지'}
                                                                                     </span>
                                                                               </td>
-                                                                              <td data-label="제목">
+                                                                              <td data-label="제목" className={styles.titleCell}>
                                                                                     {record.title}
                                                                               </td>
-                                                                              <td data-label="내용">
+                                                                              <td data-label="내용" className={styles.contentCell}>
                                                                                     {record.content}
                                                                               </td>
+
                                                                               <td data-label="태그">
                                                                                     <div className={styles.tagWrap}>
                                                                                           {(record.tags ?? []).map((tag) => (
@@ -370,11 +367,7 @@ export default function DevRecordPage() {
                                                             <button
                                                                   key={subject}
                                                                   type="button"
-                                                                  className={`${styles.subjectTab} ${
-                                                                        activeSubject === subject
-                                                                              ? styles.subjectTabActive
-                                                                              : ''
-                                                                  }`}
+                                                                  className={styles.subjectTab}
                                                                   onClick={() => handleSubjectChange(subject)}
                                                             >
                                                                   {`${index + 1}과목`}
