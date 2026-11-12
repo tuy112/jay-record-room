@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 const AUTH_COOKIE = "jstory_auth";
-const BACKEND_URL = "http://localhost:8087";
+const BACKEND_URL = "http://192.168.0.37:8087";
 
 export async function login(formData: FormData) {
       const userId = String(formData.get("id") ?? "").trim();
