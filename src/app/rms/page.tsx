@@ -5,26 +5,16 @@ import { useCallback, useEffect, useState } from 'react';
 import Header from '../../components/header';
 import Footer from '../../components/footer';
 
+import {
+      getRmsPosts,
+      createRmsPost,
+      updateRmsPost,
+      deleteRmsPost,
+      type RmsPost,
+      type RmsDraft,
+  } from '@/lib/rms/rms';
+
 import styles from './page.module.css';
-
-// 게시글
-type RmsPost = {
-      id: number;
-      topic: string;
-      title: string;
-      subtitle: string | null;
-      content: string;
-      createdAt: string | null;
-      updatedAt: string | null;
-};
-
-// 등록 및 수정 데이터
-type RmsDraft = {
-      topic: string;
-      title: string;
-      subtitle: string;
-      content: string;
-};
 
 // RMS 업무 메뉴
 const RMS_MENUS = [
@@ -45,8 +35,6 @@ const RMS_MENUS = [
       { name: '공개관리', children: ['공개관리'] },
 ];
 
-const API_URL = '/api/rms';
-
 const EMPTY_DRAFT: RmsDraft = {
       topic: '기록물인수',
       title: '',
@@ -54,28 +42,8 @@ const EMPTY_DRAFT: RmsDraft = {
       content: '',
 };
 
-// API 공통 요청
-async function request<T>(
-      path = '',
-      options?: RequestInit,
-): Promise<T> {
-      const response = await fetch(`${API_URL}${path}`, {
-            ...options,
-            headers: {
-                  'Content-Type': 'application/json',
-                  ...options?.headers,
-            },
-            cache: 'no-store',
-      });
-
-      if (!response.ok) {
-            throw new Error(`서버 요청 실패 (${response.status})`);
-      }
-      return response.json() as Promise<T>;
-}
-
 // 날짜 출력
-function formatDate(value: string | null) {
+function formatDate(value?: string | null) {
       return value
             ? value.replace('T', ' ').slice(0, 16)
             : '-';
@@ -101,22 +69,21 @@ export default function RmsPage() {
       // 목록 조회
       const loadPosts = useCallback(async () => {
             try {
-                  const data = await request<RmsPost[]>();
-
+                  const data = await getRmsPosts();
+      
                   setPosts(data);
-
+      
                   setSelectedId(current =>
-                        current !== null &&
-                        data.some(post => post.id === current)
+                        current !== null && data.some(post => post.id === current)
                               ? current
                               : data[0]?.id ?? null
                   );
-
-                  setError('');
+    
+                setError('');
             } catch {
-                  setError('RMS 기록을 불러오지 못했습니다.');
+                setError('RMS 기록을 불러오지 못했습니다.');
             } finally {
-                  setLoading(false);
+                setLoading(false);
             }
       }, []);
 
@@ -207,28 +174,19 @@ export default function RmsPage() {
                   setError('제목과 분석 내용을 입력해 주세요.');
                   return;
             }
-
             setSaving(true);
             setError('');
 
             try {
                   const isEdit = editingId !== null;
 
-                  const url = isEdit ? `/${editingId}` : '';
-                  const method = isEdit ? 'PUT' : 'POST';
-
-                  await request(url, {
-                        method,
-                        body: JSON.stringify(draft),
-                  });
-
+                  if (isEdit) {
+                        await updateRmsPost(editingId, draft);
+                  } else {
+                        await createRmsPost(draft);
+                  }
                   setEditing(false);
-
-                  setNotice(
-                        isEdit
-                              ? '수정이 완료되었습니다.'
-                              : '등록이 완료되었습니다.'
-                  );
+                  setNotice(isEdit ? '수정이 완료되었습니다.' : '등록이 완료되었습니다.');
 
                   await loadPosts();
             } catch {
@@ -241,23 +199,20 @@ export default function RmsPage() {
       // 삭제
       const deletePost = async (post: RmsPost) => {
             if (!window.confirm('선택한 분석 기록을 삭제하시겠습니까?')) {
-                  return;
+                return;
             }
-
             setSaving(true);
             setError('');
-
+    
             try {
-                  await request(`/${post.id}`, {
-                        method: 'DELETE',
-                  });
-
-                  setNotice('삭제가 완료되었습니다.');
-                  await loadPosts();
+                await deleteRmsPost(post.id);
+    
+                setNotice('삭제가 완료되었습니다.');
+                await loadPosts();
             } catch {
-                  setError('기록 삭제에 실패했습니다.');
+                setError('기록 삭제에 실패했습니다.');
             } finally {
-                  setSaving(false);
+                setSaving(false);
             }
       };
 
