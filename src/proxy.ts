@@ -11,6 +11,13 @@ export function proxy(request: NextRequest) {
       const isLoggedIn = request.cookies.get("jstory_auth")?.value === "ok";
       const userRole = request.cookies.get("jstory_role")?.value;
 
+      console.log("[PROXY AUTH]", {
+            pathname,
+            isLoggedIn,
+            userRole,
+            authCookie: request.cookies.get("jstory_auth")?.value,
+      });
+
       // 로그인 및 회원가입 페이지는 누구나 접근 가능
       const isPublicPage =
             pathname.startsWith("/login") ||

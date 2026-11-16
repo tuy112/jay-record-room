@@ -121,14 +121,26 @@ export async function updateDiary(
 }
 
 // 일기 삭제
-export async function deleteDiary(id: number): Promise<number> {
+export async function deleteDiary(id: number) {
       const response = await fetch(`${API_URL}/${id}`, {
             method: 'DELETE',
+            cache: 'no-store',
       });
 
+      const responseText = await response.text();
+
       if (!response.ok) {
-            throw new Error('일기 삭제에 실패했습니다.');
+            console.error('일기 삭제 API 오류:', {
+                  status: response.status,
+                  statusText: response.statusText,
+                  response: responseText,
+                  id,
+            });
+
+            throw new Error(
+                  `일기 삭제 실패 (${response.status}): ${responseText}`
+            );
       }
 
-      return response.json();
+      return responseText;
 }

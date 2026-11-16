@@ -40,14 +40,16 @@ export async function login(formData: FormData) {
                   httpOnly: true,
                   path: "/",
                   sameSite: "lax",
-                  secure: process.env.NODE_ENV === "production",
+                  // secure: process.env.NODE_ENV === "production",
+                  secure: false,
             });
 
             cookieStore.set("jstory_role", result.userRole, {
                   httpOnly: true,
                   path: "/",
                   sameSite: "lax",
-                  secure: process.env.NODE_ENV === "production",
+                  // secure: process.env.NODE_ENV === "production",
+                  secure: false,
             });
 
             console.log("[로그인 성공]");
